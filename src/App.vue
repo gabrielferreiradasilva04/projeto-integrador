@@ -1,7 +1,21 @@
 <template>
+  <DashBoard v-if="notIsLoginOrRegister" />
   <router-view />
 </template>
 
-<script lang="ts" setup>
-  //
+<script>
+import DashBoard from "./components/dashBoard/DashBoard.vue";
+export default{
+
+  components:{DashBoard},
+
+  computed:{
+    notIsLoginOrRegister(){
+      return this.$route.path !== "/" && this.$route.path !== "/register";
+    }
+  }
+
+}
+
+
 </script>

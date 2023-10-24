@@ -4,7 +4,7 @@
           activator="parent"
           width="auto"
           v-model="this.dialog"
-          persistent="true"
+          persistent
           
         >
           <v-card>
@@ -14,7 +14,7 @@
                 </p>
             </v-card-text>
             <v-card-actions>
-              <v-btn color="primary" block @click="$emit('closeMessageDialog')" v-model="button">Ok</v-btn>
+              <v-btn color="primary" block @click="$emit('closeMessageDialog')">Ok</v-btn>
             </v-card-actions>
           </v-card>
         </v-dialog>

@@ -47,8 +47,8 @@
 <script>
 
 import { mask } from 'vue-the-mask'
-import Message from './Message.vue';
-import Terms from './Terms.vue';
+import Message from '../../dialogs/Message.vue';
+import Terms from '../../dialogs/Terms.vue';
 
 
 export default {
@@ -104,7 +104,7 @@ export default {
                             this.dialogMessage = "Parabéns! Cadastro realizado com sucesso"
                             setTimeout(() => {
                                 this.$router.push('/home')
-                            }, 1000);
+                            }, 2000);
 
 
 

@@ -1,14 +1,13 @@
 <template>
   <v-app>
-    <v-app-bar>
-
-    </v-app-bar>
-    <hello-world />
+    <router-view />
+    <v-footer>
+      <h1>This is an Footer</h1>
+    </v-footer>
   </v-app>
 </template>
 
-<script lang="ts" setup>
-import HelloWorld from '@/components/HelloWorld.vue';
+<script>
 
 
 </script>

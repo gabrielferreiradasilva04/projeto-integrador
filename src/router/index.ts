@@ -4,7 +4,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 export const routes = [
   {
     path: '/home',
-    component: () => import('@/layouts/default/Default.vue'),
+    component: () => import('@/views/HomeView.vue'),
     children: [
       {
         path: '/home',
@@ -12,7 +12,7 @@ export const routes = [
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
-        component: () => import(/* webpackChunkName: "home" */ '@/views/Home.vue'),
+        component: () => import(/* webpackChunkName: "home" */ '@/views/HomeView.vue'),
       },
     ],
   },
@@ -36,6 +36,28 @@ export const routes = [
         path: '/',
         name: 'LoginView',
         component: () => import('@/views/LoginView.vue'),
+      },
+    ],
+  },
+  {
+    path: '/championships',
+    component: () => import('@/views/ChampionshipsView.vue'),
+    children: [
+      {
+        path: '/championships',
+        name: 'ChampionshipsView',
+        component: () => import('@/views/ChampionshipsView.vue'),
+      },
+    ],
+  },
+  {
+    path: '/mybets',
+    component: () => import('../views/MyBetsView.vue'),
+    children: [
+      {
+        path: '/mybets',
+        name: 'MyBetsView',
+        component: () => import('../views/MyBetsView.vue'),
       },
     ],
   },

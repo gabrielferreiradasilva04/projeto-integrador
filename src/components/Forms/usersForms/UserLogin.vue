@@ -18,6 +18,8 @@
 </template>
   
 <script>
+import Message from '../../dialogs/Message.vue';
+
 export default {
   data: () => ({
 
@@ -42,9 +44,15 @@ export default {
 
           if (res.status === 200) {
 
-            userResponse = res.json();
-            this.dialogMessage = "Seja bem vindo " + userResponse.name
-            this.dialogMessageModal = true;
+            (res.json().then((data => {
+              
+              this.dialogMessageModal = true;
+              this.dialogMessage = "Seja bem vindo(a) " + data.name;
+              setTimeout(() => {
+                this.$router.push('/home')
+              }, 1000);
+
+            })))
 
           }
 
@@ -63,10 +71,12 @@ export default {
         .catch((res =>
 
           console.log(res.json())))
-          
+
     }
 
-  }
+  },
+  //Componentes do documento
+  components: { Message },
 
 }
 </script>

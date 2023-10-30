@@ -61,7 +61,28 @@ export const routes = [
       },
     ],
   },
-  
+  {
+    path: '/usersControl',
+    component: () => import('../views/UsersControl.vue'),
+    children: [
+      {
+        path: '/usersControl',
+        name: 'UsersControl',
+        component: () => import('../views/UsersControl.vue'),
+      },
+    ],
+  },
+  {
+    path: '/userEdit/:id',
+    component: () => import('../views/UserEdit.vue'),
+    children: [
+      {
+        path: '/userEdit/:id',
+        name: 'userEdit',
+        component: () => import('../views/UserEdit.vue'),
+      },
+    ],
+  },
 ]
 
 const router = createRouter({

@@ -46,7 +46,7 @@
         tab: null,
         items: [
           {text: 'Home', link: '/home'},
-          {text: 'Campeonatos', link: '/championships'},
+          {text: 'Campeonatos', link: '/usersControl'},
           {text: 'Minhas Apostas', link: '/mybets'},
         ],
       }

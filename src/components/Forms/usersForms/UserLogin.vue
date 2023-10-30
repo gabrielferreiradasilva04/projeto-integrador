@@ -48,6 +48,12 @@ export default {
               
               this.dialogMessageModal = true;
               this.dialogMessage = "Seja bem vindo(a) " + data.name;
+
+
+              localStorage.setItem('authUser',JSON.stringify(data))
+              console.log(localStorage.getItem('authUser'));
+
+              
               setTimeout(() => {
                 this.$router.push('/home')
               }, 1000);

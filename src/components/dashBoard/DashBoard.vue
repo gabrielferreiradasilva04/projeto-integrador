@@ -1,9 +1,7 @@
 <template>
   <v-card>
     <v-toolbar color="orange-darken-2">
-      <v-app-bar-nav-icon></v-app-bar-nav-icon>
-
-      <v-toolbar-title>Dashboard</v-toolbar-title>
+      <v-toolbar-title>Painel de Controle Administrativo</v-toolbar-title>
 
       <v-spacer></v-spacer>
 
@@ -45,12 +43,24 @@
       return {
         tab: null,
         items: [
-          {text: 'Home', link: '/home'},
-          {text: 'Campeonatos', link: '/usersControl'},
-          {text: 'Minhas Apostas', link: '/mybets'},
+          {text: 'Home', link: '/administratorHome'},
+          {text: 'Consulta de Usuários', link: '/usersSearch'},
+          {text: 'Registro de Usuários', link: '/registerAllUsers'},
         ],
+        user:{}
       }
     },
+    methods:{
+      async getCurrentUser() {
+            await fetch('http://localhost:8081/User/' + this.$route.params.id)
+                .then(res => res.json())
+                .then(data => {
+
+                    this.user = data;
+
+                })
+        },
+    }
   }
 </script>
 

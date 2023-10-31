@@ -24,7 +24,16 @@
                 <input type="text" name="userRegisterDate" id="registerDate" v-model="this.user.registerDate">
 
                 <label for="userType"><strong>Tipo de usuário</strong></label>
-                <input type="text" name="UserType" id="userType" v-model="this.user.userType">
+                <div class="userTypeCombo">
+                    <select name="userType" id="userType" v-model="user.userType">
+                        <option value="" disabled selected>Tipo de usuário</option>
+                        <option value="0">Administrador de Campeonatos</option>
+                        <option value="1">Administrador da Casa</option>
+                        <option value="2">Apostador</option>
+                        <option value="3">Equipe</option>
+                    </select>
+
+                </div>
                 <div class="button-box">
                     <input type="submit" @click="this.updateUser" value="Finalizar">
                     <input type="submit" @click="this.deleteUser" value="Deletar">
@@ -57,6 +66,8 @@ export default {
             await fetch('http://localhost:8081/User/' + this.$route.params.id)
                 .then(res => res.json())
                 .then(data => {
+                    
+                    var comboUserType = document.querySelector("#userType");
 
                     this.user = data;
 
@@ -77,6 +88,8 @@ export default {
             }).then(res => {
                 if (res.status === 200) {
                     alert("Usuário atualizado")
+                    this.$router.push('/administratorHome')
+
                 } else {
                     alert("Erro ao atualizar usuário")
                 }
@@ -98,7 +111,7 @@ export default {
                 if (res.status === 200) {
                     alert("Usuário deletado")
 
-                    this.$router.push('/home')
+                    this.$router.push('/administratorHome')
 
 
                 } else {
@@ -144,5 +157,17 @@ export default {
     align-items: center;
     justify-content: center;
     gap: 20px;
+}
+.userTypeCombo {
+    display: flex;
+    align-items: end;
+    border: 2px solid black;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.userTypeCombo select {
+    width: 100%;
+
 }
 </style>

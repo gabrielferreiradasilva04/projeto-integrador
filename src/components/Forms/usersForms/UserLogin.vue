@@ -50,8 +50,7 @@ export default {
               this.dialogMessage = "Seja bem vindo(a) " + data.name;
 
 
-              localStorage.setItem('authUser',JSON.stringify(data))
-              console.log(localStorage.getItem('authUser'));
+              
 
               
               setTimeout(() => {

@@ -1,22 +1,27 @@
 <template>
     <body>
         <div class="main">
-            <form action="" class="users-form">
-                <input type="text" name="" id="" class="userFormInput" placeholder="nome do usuario" v-model="nameToFind">
-                <input type="submit" name="" id="" class="userFormInput" value="Buscar" @click="this.searchAllUsers">
-            </form>
+            <div class="users-form-box">
+                <form action="" class="users-form">
+                    <input type="text" name="" id="" class="userFormInput" placeholder="nome do usuario" v-model="nameToFind">
+                   <button id="search-button" @click="this.searchAllUsers">Buscar</button>
+                </form>
+            </div>
             <div class="tableUsers">
-                <v-table>
+                <v-table class="table">
                     <thead>
                         <tr>
                             <th class="text-left">
-                                Nome Completo
+                                    Nome Completo
                             </th>
                             <th class="text-left">
                                 E-mail
                             </th>
                             <th class="text-left">
                                 Telefone de Contato
+                            </th>
+                            <th class="text-left">
+                                Tipo de Usuário
                             </th>
                             <th class="text-left">
                                 Ações
@@ -28,6 +33,7 @@
                             <td>{{ user.name }}</td>
                             <td>{{ user.email }}</td>
                             <td>{{ user.phone }}</td>
+                            <td>{{ user.userType }}</td>
                             <td>
                                <button @click="this.userEdit(user.id)">Editar</button>
                             </td>
@@ -91,7 +97,8 @@ export default {
 
 <style scoped>
 .userFormInput {
-    border: 2px black solid;
+    border-bottom: 2px solid black;
+    height: 40px;
 }
 
 body {
@@ -105,7 +112,33 @@ body {
 }
 td button{
     border: 2px solid black;
+    border-radius: 10px;
     width: 100px;
     height: 25px;
 }
+.users-form-box{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+form{
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    gap: 20px;
+}
+#search-button{
+    border: 2px solid black;
+    border-radius: 10px;
+    width: 20%;
+}
+.table{
+    border: solid 2px rgb(227, 139, 7);
+    border-radius: 20px;
+    
+    
+}
+
+
 </style>

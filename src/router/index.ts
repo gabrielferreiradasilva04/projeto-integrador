@@ -3,16 +3,16 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 export const routes = [
   {
-    path: '/home',
-    component: () => import('@/views/HomeView.vue'),
+    path: '/administratorHome',
+    component: () => import('@/views/AdministratorHomeView.vue'),
     children: [
       {
-        path: '/home',
-        name: 'Home',
+        path: '/administratorHome',
+        name: 'AdministratorHome',
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
-        component: () => import(/* webpackChunkName: "home" */ '@/views/HomeView.vue'),
+        component: () => import(/* webpackChunkName: "home" */ '@/views/AdministratorHomeView.vue'),
       },
     ],
   },
@@ -62,24 +62,35 @@ export const routes = [
     ],
   },
   {
-    path: '/usersControl',
-    component: () => import('../views/UsersControl.vue'),
+    path: '/usersSearch',
+    component: () => import('../views/UsersSearch.vue'),
     children: [
       {
-        path: '/usersControl',
-        name: 'UsersControl',
-        component: () => import('../views/UsersControl.vue'),
+        path: '/usersSearch',
+        name: 'UsersSearch',
+        component: () => import('../views/UsersSearch.vue'),
       },
     ],
   },
   {
     path: '/userEdit/:id',
-    component: () => import('../views/UserEdit.vue'),
+    component: () => import('../views/UserEditView.vue'),
     children: [
       {
         path: '/userEdit/:id',
         name: 'userEdit',
-        component: () => import('../views/UserEdit.vue'),
+        component: () => import('../views/UserEditView.vue'),
+      },
+    ],
+  },
+  {
+    path: '/registerAllUsers',
+    component: () => import('../views/AllUsersTypeRegisterView.vue'),
+    children: [
+      {
+        path: '/registerAllUsers',
+        name: 'registerAllUsers',
+        component: () => import('../views/AllUsersTypeRegisterView.vue'),
       },
     ],
   },

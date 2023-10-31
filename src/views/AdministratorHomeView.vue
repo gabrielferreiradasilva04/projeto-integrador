@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import Home from "../components/dashBoard/components/Home.vue"
+import Home from "../components/dashBoard/components/AdministratorHome.vue"
 
 export default {
   components: { Home },

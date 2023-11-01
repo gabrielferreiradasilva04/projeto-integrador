@@ -103,7 +103,7 @@ export default {
                             this.dialogMessageModal = true;
                             this.dialogMessage = "Parabéns! Cadastro realizado com sucesso"
                             setTimeout(() => {
-                                this.$router.push('/home')
+                                this.$router.push('/')
                             }, 2000);
 
 

@@ -3,9 +3,9 @@
     <h1>Login</h1>
     <v-sheet width="300" class="mx-auto">
       <v-form fast-fail @submit.prevent>
-        <v-text-field v-model="user.userMail" label="E-mail"></v-text-field>
+        <v-text-field v-model="user.email" label="E-mail"></v-text-field>
 
-        <v-text-field v-model="user.userPassword" label="Senha de acesso"></v-text-field>
+        <v-text-field v-model="user.password" label="Senha de acesso"></v-text-field>
 
         <v-btn type="submit" color="success" block class="mt-2" @click="login">Entrar</v-btn>
         <v-btn type="button" color="success" block class="mt-2" to="/register">Cadastre-se</v-btn>
@@ -24,8 +24,8 @@ export default {
   data: () => ({
 
     user: {
-      userMail: null,
-      userPassword: null
+      email:null,
+      password:null
     },
     //dialog
     dialogMessage: null,
@@ -33,49 +33,39 @@ export default {
 
   }),
   methods: {
-    async login() {
+    async login(e) {
 
-      await fetch('http://localhost:8081/User/findUserByMailAndPassword?email=' + this.user.userMail + '&password=' + this.user.userPassword, {
-        method: 'get',
-        headers: { 'Content-type': 'application/json' }
+      e.preventDefault()
+      
+      var userJson = JSON.stringify(this.user)
 
+      console.log(userJson)
+
+      await fetch('http://localhost:8081/auth/login', {
+        method: 'post',
+        headers: { 'Content-type': 'application/json' },
+        body: userJson
       })
         .then((res => {
 
           if (res.status === 200) {
 
-            (res.json().then((data => {
-              
-              this.dialogMessageModal = true;
-              this.dialogMessage = "Seja bem vindo(a) " + data.name;
+            this.dialogMessageModal = true;
+            this.dialogMessage = "Seja bem vindo(a) "
 
-
-              
-
-              
-              setTimeout(() => {
-                this.$router.push('/home')
-              }, 1000);
-
-            })))
-
+            setTimeout(() => {
+              this.$router.push('/administratorHome')
+            }, 1000);
+            
           }
 
           if (res.status === 404) {
 
-            (res.json().then((data => {
-
-              this.dialogMessageModal = true;
-              var serverResponse = data.message;
-              this.dialogMessage = serverResponse;
-
-            })))
+            alert("Erro...")
           }
 
         }))
-        .catch((res =>
-
-          console.log(res.json())))
+        .catch(alert("Erro no catch"))
 
     }
 

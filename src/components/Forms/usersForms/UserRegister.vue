@@ -92,7 +92,7 @@ export default {
                 } else {
                     var userJson = JSON.stringify(this.user);
 
-                    await fetch('http://localhost:8081/User', {
+                    await fetch('http://localhost:8081/auth/register', {
 
                         method: 'post',
                         headers: { 'Content-type': 'application/json' },

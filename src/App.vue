@@ -11,7 +11,7 @@ export default{
 
   computed:{
     notIsLoginOrRegister(){
-      return this.$route.path !== "/" && this.$route.path !== "/register";
+      return this.$route.path !== "/" && this.$route.path !== "/register" && this.$route.path !== "/error-page";
     }
   }
 

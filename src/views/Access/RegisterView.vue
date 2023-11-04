@@ -1,8 +1,8 @@
 
 <template>
     <v-container class="pa-6 text-center ">
-        <h1>Registro de Usuários</h1>
-        <v-sheet width="60%" class="mx-auto">
+        <h1>Cadastre-se</h1>
+        <v-sheet width="300" class="mx-auto">
 
             <v-form ref="form">
                 <v-text-field v-model="user.name" :rules="nameRules" label="Nome completo" required></v-text-field>
@@ -21,26 +21,16 @@
                 <v-text-field v-model="user.phone" :rules="nameRules" label="Telfone para contato"
                     v-mask="['(##)#####-####']" required></v-text-field>
 
-                <div class="userTypeCombo">
-                    <select name="userType" id="userType" v-model="this.user.userType">
-                        <option value="" disabled selected>Tipo de usuário</option>
-                        <option value="0">Administrador de Campeonatos</option>
-                        <option value="1">Administrador da Casa</option>
-                        <option value="2">Apostador</option>
-                        <option value="3">Equipe</option>
-                    </select>
-
-                </div>
-
                 <v-checkbox v-model="checkbox" :rules="[v => !!v || 'Você precisa concordar para continuar']"
                     label="Li e aceito os termos de uso" required @click="this.termsDialog = true"></v-checkbox>
 
                 <div class="d-flex flex-column">
                     <v-btn color="success" class="mt-4" block @click="validate">
-                        Concluir
+                        Validate
                     </v-btn>
-                    <v-btn color="warning" class="mt-4" block @click="this.reset">
-                        Limpar Campos
+
+                    <v-btn color="success" class="mt-4" block to="/">
+                        Já possuo uma conta!
                     </v-btn>
 
                 </div>
@@ -57,8 +47,8 @@
 <script>
 
 import { mask } from 'vue-the-mask'
-import Message from '../components/dialogs/Message.vue';
-import Terms from '../components/dialogs/Terms.vue';
+import Message from '@/components/dialogs/Message.vue';
+import Terms from '@/components/dialogs/Terms.vue';
 
 
 export default {
@@ -77,7 +67,7 @@ export default {
             email: null,
             password: null,
             phone: null,
-            userType: '',
+            userType: 2,
         },
         confirmPassword: null,
         //Dialogs
@@ -97,30 +87,24 @@ export default {
             if (valid) {
 
                 if (this.user.password != this.confirmPassword) {
-
                     this.dialogMessageModal = true;
                     this.dialogMessage = "As senhas não conferem"
-
                 } else {
-
                     var userJson = JSON.stringify(this.user);
-                    await fetch('http://localhost:8081/User', {
+
+                    await fetch('http://localhost:8081/auth/register', {
 
                         method: 'post',
                         headers: { 'Content-type': 'application/json' },
                         body: userJson
 
                     }).then((res => {
-
+                        
                         if (res.status === 201) {
                             this.dialogMessageModal = true;
                             this.dialogMessage = "Parabéns! Cadastro realizado com sucesso"
                             setTimeout(() => {
-
-                                
-                                this.$router.push('/administratorHome')
-
-
+                                this.$router.push('/')
                             }, 2000);
 
                         }
@@ -156,18 +140,3 @@ export default {
     }
 }
 </script>
-
-<style scoped>
-.userTypeCombo {
-    display: flex;
-    align-items: end;
-    border: 2px solid black;
-    border-radius: 10px;
-    padding: 10px;
-}
-
-.userTypeCombo select {
-    width: 100%;
-
-}
-</style>

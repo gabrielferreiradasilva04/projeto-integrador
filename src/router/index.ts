@@ -3,96 +3,44 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 export const routes = [
   {
-    path: '/administratorHome',
-    component: () => import('@/views/AdministratorHomeView.vue'),
-    children: [
-      {
-        path: '/administratorHome',
-        name: 'AdministratorHome',
-        // route level code-splitting
-        // this generates a separate chunk (about.[hash].js) for this route
-        // which is lazy-loaded when the route is visited.
-        component: () => import(/* webpackChunkName: "home" */ '@/views/AdministratorHomeView.vue'),
-      },
-    ],
+    path: '/administrator-home',
+    component: () => import('@/views/Admin/AdministratorHomeView.vue'),
   },
   {
     path: '/register',
-    component: () => import('@/views/RegisterView.vue'),
-    children: [
-      {
-        path: '/register',
-        name: 'RegisterView',
-        component: () => import('@/views/RegisterView.vue'),
-        
-      },
-    ],
+    component: () => import('@/views/Access/RegisterView.vue'),
   },
   {
     path: '/',
-    component: () => import('@/views/LoginView.vue'),
-    children: [
-      {
-        path: '/',
-        name: 'LoginView',
-        component: () => import('@/views/LoginView.vue'),
-      },
-    ],
+    component: () => import('@/views/Access/LoginView.vue'),
   },
   {
-    path: '/championships',
-    component: () => import('@/views/ChampionshipsView.vue'),
-    children: [
-      {
-        path: '/championships',
-        name: 'ChampionshipsView',
-        component: () => import('@/views/ChampionshipsView.vue'),
-      },
-    ],
+    path: '/users-championships',
+    component: () => import('@/views/Users/ChampionshipsView.vue'),
   },
   {
-    path: '/mybets',
-    component: () => import('../views/MyBetsView.vue'),
-    children: [
-      {
-        path: '/mybets',
-        name: 'MyBetsView',
-        component: () => import('../views/MyBetsView.vue'),
-      },
-    ],
+    path: '/my-bets',
+    component: () => import('../views/Users/MyBetsView.vue'),
   },
   {
-    path: '/usersSearch',
-    component: () => import('../views/UsersSearch.vue'),
-    children: [
-      {
-        path: '/usersSearch',
-        name: 'UsersSearch',
-        component: () => import('../views/UsersSearch.vue'),
-      },
-    ],
+    path: '/administrator-user-search',
+    component: () => import('../views/Admin/AdministratorUserSearchView.vue'),
   },
   {
-    path: '/userEdit/:id',
-    component: () => import('../views/UserEditView.vue'),
-    children: [
-      {
-        path: '/userEdit/:id',
-        name: 'userEdit',
-        component: () => import('../views/UserEditView.vue'),
-      },
-    ],
+    path: '/administrator-user-edit/:id',
+    component: () => import('../views/Admin/AdministratorUserEditView.vue'),
   },
   {
-    path: '/registerAllUsers',
-    component: () => import('../views/AllUsersTypeRegisterView.vue'),
-    children: [
-      {
-        path: '/registerAllUsers',
-        name: 'registerAllUsers',
-        component: () => import('../views/AllUsersTypeRegisterView.vue'),
-      },
-    ],
+    path: '/administrator-user-register',
+    component: () => import('../views/Admin/AdminstratorUserRegisterView.vue'),
+  },
+  {
+    path: '/error-page',
+    component: () => import('../views/Errors/DefaultErrorPage.vue'),
+  },
+  {
+    path: '/user-home',
+    component: () => import('../views/Users/UsersHome.vue'),
   },
 ]
 

@@ -66,7 +66,7 @@ export default {
             await fetch('http://localhost:8081/User/' + this.$route.params.id)
                 .then(res => res.json())
                 .then(data => {
-                    
+
                     var comboUserType = document.querySelector("#userType");
 
                     this.user = data;
@@ -88,7 +88,7 @@ export default {
             }).then(res => {
                 if (res.status === 200) {
                     alert("Usuário atualizado")
-                    this.$router.push('/administratorHome')
+                    this.$router.push('/administrator-home')
 
                 } else {
                     alert("Erro ao atualizar usuário")
@@ -111,7 +111,7 @@ export default {
                 if (res.status === 200) {
                     alert("Usuário deletado")
 
-                    this.$router.push('/administratorHome')
+                    this.$router.push('/administrator-home')
 
 
                 } else {
@@ -158,6 +158,7 @@ export default {
     justify-content: center;
     gap: 20px;
 }
+
 .userTypeCombo {
     display: flex;
     align-items: end;

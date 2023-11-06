@@ -9,31 +9,31 @@
                 <label for="" id="userId">{{ user.id }}</label>
 
                 <label for="userName"><strong>Nome</strong></label>
-                <input type="text" name="userName" id="userName" v-model="this.user.name">
+                <label for="" id="userName">{{ user.name }}</label>
 
                 <label for="userMail"><strong>E-mail</strong></label>
-                <input type="text" name="userEmail" id="userMail" v-model="this.user.email">
+                <label for="" id="userMail">{{ user.email }}</label>
 
                 <label for="userPhone"><strong>Telefone para contato</strong></label>
                 <input type="text" name="userPhone" id="userPhone" v-model="this.user.phone">
 
                 <label for="userDocument"><strong>CPF</strong></label>
-                <input type="text" name="userDocument" id="userDocument" v-model="this.user.document">
+                <label for="" id="userDocument">{{ user.document }}</label>
+
 
                 <label for="registerDate"><strong>Data de ingresso</strong></label>
-                <input type="text" name="userRegisterDate" id="registerDate" v-model="this.user.registerDate">
+                <label for="" id="registerDate">{{ this.registerDateFormat }}</label>
 
                 <label for="userType"><strong>Tipo de usuário</strong></label>
-                <div class="userTypeCombo">
-                    <select name="userType" id="userType" v-model="user.userType">
-                        <option value="" disabled selected>Tipo de usuário</option>
-                        <option value="0">Administrador de Campeonatos</option>
-                        <option value="1">Administrador da Casa</option>
-                        <option value="2">Apostador</option>
-                        <option value="3">Equipe</option>
-                    </select>
 
-                </div>
+                <select name="userType" id="userType" v-model="this.user.userType">
+                    <option value="0">Administrador de Campeonatos</option>
+                    <option value="1">Administrador da Casa</option>
+                    <option value="2">Apostador</option>
+                    <option value="3">Equipe</option>
+                </select>
+
+
                 <div class="button-box">
                     <input type="submit" @click="this.updateUser" value="Finalizar">
                     <input type="submit" @click="this.deleteUser" value="Deletar">
@@ -51,14 +51,15 @@ export default {
     data() {
         return {
             user: {
-                name: '',
-                document: '',
-                email: '',
-                password: '',
-                phone: '',
-                registerDate: '',
+                name: null,
+                document: null,
+                email: null,
+                password: null,
+                phone: null,
+                registerDate: null,
                 userType: ''
-            }
+            },
+            registerDateFormat: null
         }
     },
     methods: {
@@ -66,11 +67,11 @@ export default {
             await fetch('http://localhost:8081/User/' + this.$route.params.id)
                 .then(res => res.json())
                 .then(data => {
-
-                    var comboUserType = document.querySelector("#userType");
-
                     this.user = data;
 
+                    var userDate = new  Date(this.user.registerDate);
+                    this.registerDateFormat = userDate.toString()
+                    
                 })
         },
 
@@ -123,9 +124,9 @@ export default {
         }
     },
     beforeMount() {
-
         this.getUser();
-    }
+    },
+
 
 }
 
@@ -159,16 +160,13 @@ export default {
     gap: 20px;
 }
 
-.userTypeCombo {
+
+
+#userType {
     display: flex;
     align-items: end;
     border: 2px solid black;
     border-radius: 10px;
     padding: 10px;
-}
-
-.userTypeCombo select {
-    width: 100%;
-
 }
 </style>

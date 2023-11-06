@@ -42,6 +42,19 @@ export const routes = [
     path: '/user-home',
     component: () => import('../views/Users/UsersHome.vue'),
   },
+  {
+    path: '/championship-administrator-register',
+    component: () => import('../views/Admin/ChampionshipAdministratorViews/ChampionshipAdministratorRegisterView.vue'),
+  },
+  {
+    path: '/championship-administrator-championships',
+    component: () => import('../views/Admin/ChampionshipAdministratorViews/ChampionshipAdministratorChampionshipsView.vue'),
+  },
+  {
+    path: '/championship-administrator-championships-add',
+    component: () => import('../views/Admin/ChampionshipAdministratorViews/ChampionshipAdministratorAddChampionship.vue'),
+  },
+  
 ]
 
 const router = createRouter({

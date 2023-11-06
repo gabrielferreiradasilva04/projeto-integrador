@@ -20,7 +20,7 @@
 
     <v-window v-model="tab">
       <v-window-item v-for="item in items" :key="item" :value="item.text">
-       
+
       </v-window-item>
     </v-window>
   </v-card>
@@ -65,24 +65,30 @@ export default {
           if (this.user.userType === "HOUSEMANAGER") {
             this.items = [
               { text: 'Admin Home', path: '/administrator-home' },
-              { text: 'Consulta de Usuários', path: '/administrator-user-search' },
-              { text: 'Registro de Usuários', path: '/administrator-user-register' },
+              { text: 'Gerenciar Usuários', path: '/administrator-user-search' },
             ]
             this.welcome = 'Painel de Controle Administrativo';
           }
           if (this.user.userType === "BETTOR") {
             this.items = [
               { text: 'Home', path: '/user-home' },
-              { text: 'Campeonatos Brasileiros', path: '/users-championships'},
+              { text: 'Campeonatos Brasileiros', path: '/users-championships' },
               { text: 'Minhas Apostas', path: '/my-bets' },
             ]
-            this.welcome = 'Seja bem vindo '+this.user.name;
-
+            this.welcome = 'Seja bem vindo ' + this.user.name;
+          }
+          if (this.user.userType === "CHAMPIONSHIPADMINISTRATOR") {
+            this.items = [
+              { text: 'Admin Home', path: '/championship-administrator-home' },
+              { text: 'Gerenciar Equipes', path: '/championship-administrator-register' },
+              { text: 'Gerenciar Campeonatos da Região', path: '/my-bets' },
+            ]
+            this.welcome = "Painel de Controle Administrativo de Campeonatos"
           }
         })
       } else {
-          this.$router.push('/error-page')
-      
+        this.$router.push('/error-page')
+
       }
 
 

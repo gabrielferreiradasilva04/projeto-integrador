@@ -3,8 +3,9 @@
         <div class="main">
             <div class="users-form-box">
                 <form action="" class="users-form">
-                    <input type="text" name="" id="" class="userFormInput" placeholder="nome do usuario" v-model="nameToFind">
-                   <button id="search-button" @click="this.searchAllUsers">Buscar</button>
+                    <input type="text" name="" id="" class="userFormInput" placeholder="nome do usuario"
+                        v-model="nameToFind">
+                    <button id="search-button" @click="this.searchAllUsers">Buscar</button>
                 </form>
             </div>
             <div class="tableUsers">
@@ -12,16 +13,13 @@
                     <thead>
                         <tr>
                             <th class="text-left">
-                                    Nome Completo
+                                Nome da Equipe
                             </th>
                             <th class="text-left">
-                                E-mail
+                                E-mail da Equipe
                             </th>
                             <th class="text-left">
-                                Telefone de Contato
-                            </th>
-                            <th class="text-left">
-                                Tipo de Usuário
+                                Telefone da Equipe
                             </th>
                             <th class="text-left">
                                 Ações
@@ -35,13 +33,13 @@
                             <td>{{ user.phone }}</td>
                             <td>{{ user.userType }}</td>
                             <td>
-                               <button @click="this.userEdit(user.id)">Editar</button>
+                                <button @click="this.userEdit(user.id)">Editar</button>
                             </td>
                         </tr>
                     </tbody>
                 </v-table>
                 <div class="button-add-div">
-                    <button @click="addUser">Adicionar novo usuário</button>
+                    <button @click="addUser">Adicionar nova Equipe</button>
                 </div>
             </div>
         </div>
@@ -62,10 +60,14 @@ export default {
 
             e.preventDefault();
 
+            var userType = {
+                userType: "TEAM"
+            }
             if (this.nameToFind === '') {
-                await fetch('http://localhost:8081/User', {
+                await fetch('http://localhost:8081/User/findUserByUserType', {
                     method: 'GET',
                     headers: { 'Content-type': 'application/json' },
+                    body: JSON.stringify(userType)
                 }).then(res => res.json())
                     .then(data => {
                         this.users = data;
@@ -83,11 +85,11 @@ export default {
 
                 })
         },
-        userEdit(id){
+        userEdit(id) {
 
-            this.$router.push('/administrator-user-edit/'+id)
+            this.$router.push('/administrator-user-edit/' + id)
         },
-        addUser(e){
+        addUser(e) {
 
             e.preventDefault();
 
@@ -118,39 +120,44 @@ body {
     display: flex;
     flex-direction: column;
 }
-td button{
+
+td button {
     border: 2px solid black;
     border-radius: 10px;
     width: 100px;
     height: 25px;
 }
-.users-form-box{
+
+.users-form-box {
     display: flex;
     align-items: center;
     justify-content: center;
 }
-form{
+
+form {
     padding: 10px;
     display: flex;
     flex-direction: column;
     width: 60%;
     gap: 20px;
 }
-#search-button{
+
+#search-button {
     border: 2px solid black;
     border-radius: 10px;
     width: 20%;
 }
 
-.button-add-div{
-    align-items: center;;
+.button-add-div {
+    align-items: center;
     display: flex;
     width: 100%;
     justify-content: end;
     padding-top: 40px;
     padding-right: 50px;
 }
-.button-add-div button{
+
+.button-add-div button {
     border: 2px black solid;
     border-radius: 20px;
     width: 250px;
@@ -159,6 +166,4 @@ form{
 
 
 }
-
-
 </style>

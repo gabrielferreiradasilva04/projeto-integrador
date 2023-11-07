@@ -21,8 +21,8 @@
                 <v-text-field v-model="user.phone" :rules="nameRules" label="Telfone para contato"
                     v-mask="['(##)#####-####']" required></v-text-field>
 
-                <div class="userTypeCombo">
-                    <select name="userType" id="userType" v-model="this.user.userType">
+                <div class="combo-div">
+                    <select name="userType" id="userType" v-model="this.user.userType" @click="this.listenerUserType">
                         <option value="" disabled selected>Tipo de usuário</option>
                         <option value="0">Administrador de Campeonatos</option>
                         <option value="1">Administrador da Casa</option>
@@ -30,7 +30,39 @@
                         <option value="3">Equipe</option>
                     </select>
 
+                    <select style="display: none;" name="userUF" id="userUF" v-model="this.user.uf" :rules="nameRules" >
+                        <option value="" disabled selected>Estado de Administração</option>
+                        <option value="PR">PR</option>
+                        <option value="SP">SP</option>
+                        <option value="SC">SC</option>
+                        <option value="RS">RS</option>
+                        <option value="MS">MS</option>
+                        <option value="RO">RO</option>
+                        <option value="AC">AC</option>
+                        <option value="AM">AM</option>
+                        <option value="RR">RR</option>
+                        <option value="PA">AP</option>
+                        <option value="TO">TO</option>
+                        <option value="MA">MA</option>
+                        <option value="RN">RN</option>
+                        <option value="PB">PB</option>
+                        <option value="PE">PE</option>
+                        <option value="AL">AL</option>
+                        <option value="SE">SE</option>
+                        <option value="BA">BA</option>
+                        <option value="MG">MG</option>
+                        <option value="RJ">RJ</option>
+                        <option value="MT">RJ</option>
+                        <option value="GO">GO</option>
+                        <option value="DF">DF</option>
+                        <option value="PI">PI</option>
+                        <option value="CE">CE</option>
+                        <option value="ES">ES</option>
+
+                    </select>
                 </div>
+
+
 
                 <v-checkbox v-model="checkbox" :rules="[v => !!v || 'Você precisa concordar para continuar']"
                     label="Li e aceito os termos de uso" required @click="this.termsDialog = true"></v-checkbox>
@@ -78,12 +110,15 @@ export default {
             password: null,
             phone: null,
             userType: '',
+            uf: ''
         },
         confirmPassword: null,
         //Dialogs
         dialogMessage: null,
         dialogMessageModal: false,
-        termsDialog: false
+        termsDialog: false,
+        //combo
+        showUf: false
 
 
 
@@ -143,6 +178,21 @@ export default {
         reset() {
             this.$refs.form.reset()
         },
+        listenerUserType(e) {
+            e.preventDefault();
+            var comboUserType = document.querySelector("#userType");
+            comboUserType.addEventListener('click', function () {
+                     var index = comboUserType.value;
+                     if(index == 0){
+                        var comboUf = document.getElementById("userUF");
+                        comboUf.style.display = 'block'
+                     }else{
+                        var comboUf = document.getElementById("userUF");
+                        comboUf.style.display = 'none'
+                     }
+            })
+
+        }
 
     },
     components: {
@@ -156,7 +206,7 @@ export default {
 </script>
 
 <style scoped>
-.userTypeCombo {
+#userType {
     display: flex;
     align-items: end;
     border: 2px solid black;
@@ -164,8 +214,16 @@ export default {
     padding: 10px;
 }
 
-.userTypeCombo select {
-    width: 100%;
+#userUF {
+    display: flex;
+    align-items: end;
+    border: 2px solid black;
+    border-radius: 10px;
+    padding: 10px;
+}
 
+.combo-div {
+    display: flex;
+    gap: 20px;
 }
 </style>

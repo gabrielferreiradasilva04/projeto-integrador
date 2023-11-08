@@ -4,7 +4,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 export const routes = [
   {
     path: '/administrator-home',
-    component: () => import('@/views/Admin/AdministratorHomeView.vue'),
+    component: () => import('@/views/Admin/HousemanagerAdministrator/AdministratorHomeView.vue'),
   },
   {
     path: '/register',
@@ -24,15 +24,15 @@ export const routes = [
   },
   {
     path: '/administrator-user-search',
-    component: () => import('../views/Admin/AdministratorUserSearchView.vue'),
+    component: () => import('../views/Admin/HousemanagerAdministrator/AdministratorUserSearchView.vue'),
   },
   {
     path: '/administrator-user-edit/:id',
-    component: () => import('../views/Admin/AdministratorUserEditView.vue'),
+    component: () => import('../views/Admin/HousemanagerAdministrator/AdministratorUserEditView.vue'),
   },
   {
     path: '/administrator-user-register',
-    component: () => import('../views/Admin/AdminstratorUserRegisterView.vue'),
+    component: () => import('../views/Admin/HousemanagerAdministrator/AdminstratorUserRegisterView.vue'),
   },
   {
     path: '/error-page',
@@ -53,6 +53,10 @@ export const routes = [
   {
     path: '/championship-administrator-championships-add',
     component: () => import('../views/Admin/ChampionshipAdministratorViews/ChampionshipAdministratorAddChampionship.vue'),
+  },
+  {
+    path: '/championship-administrator-home',
+    component: () => import('../views/Admin/ChampionshipAdministratorViews/ChampionshipAdministratorHome.vue'),
   },
   
 ]

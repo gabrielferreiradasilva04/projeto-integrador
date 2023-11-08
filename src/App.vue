@@ -1,25 +1,35 @@
 <template>
   <v-app>
-    <DashBoard v-if="notIsLoginOrRegister" />
-    <router-view />
-    <Footer v-if="notIsLoginOrRegister" />
+      <DashBoard v-if="notIsLoginOrRegister" />
+      <router-view />
+    <Footer v-if="notIsLoginOrRegister"/>
   </v-app>
 </template>
 
 <script>
 import DashBoard from "./components/dashBoard/DashBoard.vue";
-import Footer from "./components/footer/Footer.vue"
+import Footer from "./components/footer/Footer.vue";
 export default {
-
   components: { DashBoard, Footer },
 
   computed: {
     notIsLoginOrRegister() {
-      return this.$route.path !== "/" && this.$route.path !== "/register" && this.$route.path !== "/error-page";
-    }
-  }
+      return (
+        this.$route.path !== "/" &&
+        this.$route.path !== "/register" &&
+        this.$route.path !== "/error-page"
+      );
+    },
+  },
+};
 
+</script>
+
+
+<style>
+body{
+height: 100vh;
 }
 
 
-</script>
+</style>

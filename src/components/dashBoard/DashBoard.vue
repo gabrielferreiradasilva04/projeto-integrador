@@ -2,14 +2,12 @@
   <v-card>
     <v-toolbar color="blue-darken-1">
       <v-toolbar-title>{{ this.welcome }}</v-toolbar-title>
-
       <v-spacer></v-spacer>
-
       <v-btn icon>
         <v-icon>mdi-dots-vertical</v-icon>
       </v-btn>
 
-      <template v-slot:extension>
+      <template v-slot:extension >
         <v-tabs v-model="tab" align-tabs="title">
           <v-tab v-for="item in items" :key="item" :value="item.text" :to="item.path">
             {{ item.text }}
@@ -19,7 +17,7 @@
     </v-toolbar>
 
     <v-window v-model="tab">
-      <v-window-item v-for="item in items" :key="item" :value="item.text">
+      <v-window-item v-for="item in items" :key="item" :value="item.text" >
 
       </v-window-item>
     </v-window>
@@ -97,4 +95,6 @@ export default {
 
 }
 </script>
+
+
 

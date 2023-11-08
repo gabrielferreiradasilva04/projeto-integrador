@@ -5,20 +5,20 @@
         <v-sheet width="60%" class="mx-auto">
 
             <v-form ref="form">
-                <v-text-field v-model="user.name" :rules="nameRules" label="Nome completo" required></v-text-field>
+                <v-text-field v-model="user.name" :rules="nameRules" label="Nome do Representante da equipe" required></v-text-field>
 
-                <v-text-field v-model="user.document" :rules="nameRules" label="CPF" v-mask="['###.###.###-##']"
+                <v-text-field v-model="user.document" :rules="nameRules" label="CPF do Representante da equipe" v-mask="['###.###.###-##']"
                     required></v-text-field>
 
-                <v-text-field v-model="user.email" :rules="nameRules" label="E-mail para contato" required></v-text-field>
+                <v-text-field v-model="user.email" :rules="nameRules" label="E-mail da equipe" required></v-text-field>
 
-                <v-text-field v-model="user.password" :counter="8" :rules="nameRules" label="Defina uma senha de acesso"
+                <v-text-field v-model="user.password" :counter="8" :rules="nameRules" label="Defina uma senha para que a equipe acesse o sistema"
                     required :type="'' ? 'text' : 'password'"></v-text-field>
 
                 <v-text-field v-model="confirmPassword" :counter="8" :rules="nameRules" label="Confirme a senha de acesso"
                     required :type="'' ? 'text' : 'password'"></v-text-field>
 
-                <v-text-field v-model="user.phone" :rules="nameRules" label="Telfone para contato"
+                <v-text-field v-model="user.phone" :rules="nameRules" label="Telfone da equipe"
                     v-mask="['(##)#####-####']" required></v-text-field>
 
                 <v-checkbox v-model="checkbox" :rules="[v => !!v || 'Você precisa concordar para continuar']"

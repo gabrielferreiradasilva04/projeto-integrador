@@ -62,6 +62,11 @@ export default {
                   this.$router.push('/administrator-home')
                 }, 1000);
               }
+              if(data.user.userType === "CHAMPIONSHIPADMINISTRATOR"){
+                setTimeout(() => {
+                  this.$router.push('/championship-administrator-home')
+                }, 1000);
+              }
 
             })
           }

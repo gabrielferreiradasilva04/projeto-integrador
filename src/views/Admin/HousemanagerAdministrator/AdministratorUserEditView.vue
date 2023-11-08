@@ -200,7 +200,7 @@ export default {
 
 </script>
 
-<style scoped>
+<style >
 body{
     display: flex;
     justify-content: center;
@@ -241,7 +241,7 @@ body{
     display: flex;
     flex-direction: column;
     gap: 20px;
-    width: 30%;
+    width: 40%;
 }
 
 .button-box {

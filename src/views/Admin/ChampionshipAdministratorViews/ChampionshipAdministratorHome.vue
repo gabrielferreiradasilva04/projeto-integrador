@@ -13,17 +13,22 @@
     export default {
         data(){
             return{
-                user:{}
+                user:{},
+                localToken:{
+                    token: null;
+                }
             }
 
         },
         methods :{
-            async getCurrentUser(){
-
+            getCurrentUser(){
+                this.localToken.token = LocalStorage.getItem("token");
+                console.log(this.localToken.token)
                 
             }
         },
         beforeMount() {
+            this.getCurrentUser();
         },
 
     }

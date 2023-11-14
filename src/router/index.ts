@@ -44,7 +44,7 @@ export const routes = [
   },
   {
     path: '/championship-administrator-register',
-    component: () => import('../views/Admin/ChampionshipAdministratorViews/ChampionshipAdministratorRegisterView.vue'),
+    component: () => import('../views/Admin/ChampionshipAdministratorViews/TeamManagementView.vue'),
   },
   {
     path: '/championship-administrator-championships',
@@ -58,6 +58,11 @@ export const routes = [
     path: '/championship-administrator-home',
     component: () => import('../views/Admin/ChampionshipAdministratorViews/ChampionshipAdministratorHome.vue'),
   },
+  {
+    path: '/championship-administrator-team-edit/:id',
+    component: () => import('../views/Admin/ChampionshipAdministratorViews/ChampionshipAdministratorTeamEdit.vue'),
+  },
+  
   
 ]
 

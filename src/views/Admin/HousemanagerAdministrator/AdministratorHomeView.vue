@@ -1,8 +1,8 @@
 <template>
   <body>
     <div>Administrador home</div>
+
   </body>
-  
 </template>
 
 <script>

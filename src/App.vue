@@ -1,8 +1,8 @@
 <template>
   <v-app>
-      <DashBoard v-if="notIsLoginOrRegister" />
-      <router-view />
-    <Footer v-if="notIsLoginOrRegister"/>
+    <DashBoard v-if="notIsLoginOrRegister" />
+    <router-view />
+    <Footer v-if="notIsLoginOrRegister" />
   </v-app>
 </template>
 
@@ -27,9 +27,13 @@ export default {
 
 
 <style>
-body{
-height: 100vh;
+body {
+  height: 100vh;
+  background-color: #B3E5FC;
 }
-
+.button-system {
+  width: 20%;
+  border-radius: 20px;
+}
 
 </style>

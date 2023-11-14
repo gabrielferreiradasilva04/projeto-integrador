@@ -1,46 +1,53 @@
 
 <template>
-    <v-container class="pa-6 text-center ">
-        <h1>Registro de Equipes</h1>
-        <v-sheet width="60%" class="mx-auto">
+    <body>
 
-            <v-form ref="form">
-                <v-text-field v-model="user.name" :rules="nameRules" label="Nome do Representante da equipe" required></v-text-field>
+        <v-container class="pa-6 text-justfy ">
 
-                <v-text-field v-model="user.document" :rules="nameRules" label="CPF do Representante da equipe" v-mask="['###.###.###-##']"
-                    required></v-text-field>
+            <v-sheet width="60%"  class="pa-3 rounded-xl mx-auto" elevation="24" theme="dark">
 
-                <v-text-field v-model="user.email" :rules="nameRules" label="E-mail da equipe" required></v-text-field>
+                <v-form ref="form">
+                    <v-text-field v-model="user.name" :rules="nameRules" label="Nome do Representante da equipe"
+                        required></v-text-field>
 
-                <v-text-field v-model="user.password" :counter="8" :rules="nameRules" label="Defina uma senha para que a equipe acesse o sistema"
-                    required :type="'' ? 'text' : 'password'"></v-text-field>
+                    <v-text-field v-model="user.document" :rules="nameRules" label="CPF do Representante da equipe"
+                        v-mask="['###.###.###-##']" required></v-text-field>
 
-                <v-text-field v-model="confirmPassword" :counter="8" :rules="nameRules" label="Confirme a senha de acesso"
-                    required :type="'' ? 'text' : 'password'"></v-text-field>
+                    <v-text-field v-model="user.email" :rules="nameRules" label="E-mail da equipe" required></v-text-field>
 
-                <v-text-field v-model="user.phone" :rules="nameRules" label="Telfone da equipe"
-                    v-mask="['(##)#####-####']" required></v-text-field>
+                    <v-text-field v-model="user.password" :counter="8" :rules="nameRules"
+                        label="Defina uma senha para que a equipe acesse o sistema" required
+                        :type="'' ? 'text' : 'password'"></v-text-field>
 
-                <v-checkbox v-model="checkbox" :rules="[v => !!v || 'Você precisa concordar para continuar']"
-                    label="Li e aceito os termos de uso" required @click="this.termsDialog = true"></v-checkbox>
+                    <v-text-field v-model="confirmPassword" :counter="8" :rules="nameRules"
+                        label="Confirme a senha de acesso" required :type="'' ? 'text' : 'password'"></v-text-field>
 
-                <div class="d-flex flex-column">
-                    <v-btn color="success" class="mt-4" block @click="validate">
-                        Concluir
-                    </v-btn>
-                    <v-btn color="warning" class="mt-4" block @click="this.reset">
-                        Limpar Campos
-                    </v-btn>
+                    <v-text-field v-model="user.phone" :rules="nameRules" label="Telfone da equipe"
+                        v-mask="['(##)#####-####']" required></v-text-field>
 
-                </div>
-            </v-form>
-        </v-sheet>
-        <!--Componente de notificação-->
-        <Message :infoMessage="this.dialogMessage" v-if="dialogMessageModal"
-            @closeMessageDialog="this.dialogMessageModal = false" />
-        <!--Componente termos-->
-        <Terms @closeTermsDialog="this.termsDialog = false" v-if="termsDialog" />
-    </v-container>
+                    <v-select placeholder="Estado de Atuação"  v-model="this.user.uf" :rules=" [v => !!v || 'Selecione um Estado']" clearable="" :items="['PR','SP','SC','RS','MS','RO','AC','AM','RR', 'PA','TO','MA','RN', 'PB','PE','AL','SE','BA','MG','RJ','MT', 'GO','DF','PI','CE','ES']">
+                    </v-select>
+
+                    <v-checkbox v-model=" checkbox " :rules=" [v => !!v || 'Você precisa concordar para continuar']"
+                        label="Li e aceito os termos de uso" required @click="this.termsDialog = true"></v-checkbox>
+
+                    <div class="d-flex flex-column">
+                        <v-btn variant="text" color="success" class="mt-2" @click=" validate ">
+                            Concluir
+                        </v-btn>
+                        <v-btn color="warning" variant="text" class="mt-2" @click="this.reset">
+                            Limpar Campos
+                        </v-btn>
+                    </div>
+                </v-form>
+            </v-sheet>
+            <!--Componente de notificação-->
+            <Message :infoMessage=" this.dialogMessage " v-if=" dialogMessageModal "
+                @closeMessageDialog="this.dialogMessageModal = false" />
+            <!--Componente termos-->
+            <Terms @closeTermsDialog="this.termsDialog = false" v-if=" termsDialog " />
+        </v-container>
+    </body>
 </template>
   
 <script>
@@ -53,6 +60,7 @@ import Terms from '@/components/dialogs/Terms.vue';
 export default {
 
     data: () => ({
+        name: 'ChampionshipAdministratorRegister',
         nameRules: [
             v => !!v || 'Campo obrigatório',
         ],
@@ -67,6 +75,7 @@ export default {
             password: null,
             phone: null,
             userType: 3,
+            uf: null
         },
         confirmPassword: null,
         //Dialogs
@@ -107,7 +116,6 @@ export default {
                             setTimeout(() => {
 
                                 this.$router.push('/administrator-home');
-
                             }, 2000);
 
                         }
@@ -124,9 +132,13 @@ export default {
                         }
                     })).catch((res =>
                         console.log(res.json())))
+
                 }
             }
 
+        },
+        showselect(){
+            alert(this.user.uf);
         },
 
         reset() {
@@ -144,13 +156,13 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 .userTypeCombo {
     display: flex;
     align-items: end;
     border: 2px solid black;
     border-radius: 10px;
-    padding: 10px;
+    padding: 5px;
 }
 
 .userTypeCombo select {

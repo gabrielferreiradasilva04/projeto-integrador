@@ -1,6 +1,6 @@
 <template>
   <v-card>
-    <v-toolbar color="blue-darken-1">
+    <v-toolbar color="blue-darken-4">
       <v-toolbar-title>{{ this.welcome }}</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn icon>
@@ -18,7 +18,7 @@
 
     <v-window v-model="tab">
       <v-window-item v-for="item in items" :key="item" :value="item.text" >
-
+        
       </v-window-item>
     </v-window>
   </v-card>
@@ -28,8 +28,10 @@
 
 <script>
 import Message from '@/components/dialogs/Message.vue';
+import ChampionshipAdministratorRegister from '@/views/Admin/ChampionshipAdministratorViews/ChampionshipAdministratorRegisterView.vue';
+
 export default {
-  components: { Message },
+  components: { Message, ChampionshipAdministratorRegister },
   props: ['routers', "userType"],
 
   data() {

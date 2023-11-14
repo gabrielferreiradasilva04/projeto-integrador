@@ -48,7 +48,6 @@ export default {
             res.json().then(data => {
               //adicionando o token no local storage da aplicação
               localStorage.setItem("token", data.token);
-
               this.dialogMessageModal = true;
               this.dialogMessage = "Seja bem vindo(a)"
 

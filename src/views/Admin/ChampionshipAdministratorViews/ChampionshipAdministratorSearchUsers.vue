@@ -8,8 +8,8 @@
                     <button id="search-button" @click="this.searchAllUsers">Buscar</button>
                 </form>
             </div>
-            <div class="tableUsers">
-                <v-table class="table">
+            <div class="tableUsers ">
+                <v-table class="table" >
                     <thead>
                         <tr>
                             <th class="text-left">

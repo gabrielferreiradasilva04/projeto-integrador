@@ -1,5 +1,6 @@
 <template>
     <body>
+        
         <div class="main">
             <div class="users-form-box">
                 <form action="" class="users-form">
@@ -8,40 +9,40 @@
                 </form>
             </div>
             <div class="tableUsers">
-                <v-table class="table">
+                <v-table class="table font-h6">
                     <thead>
                         <tr>
-                            <th class="text-left">
+                            <th class="text-center">
                                     Nome Completo
                             </th>
-                            <th class="text-left">
+                            <th class="text-center">
                                 E-mail
                             </th>
-                            <th class="text-left">
+                            <th class="text-center">
                                 Telefone de Contato
                             </th>
-                            <th class="text-left">
+                            <th class="text-center">
                                 Tipo de Usuário
                             </th>
-                            <th class="text-left">
+                            <th class="text-center">
                                 Ações
                             </th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="text-center">
                         <tr v-for="user in users" :key="user.id">
                             <td>{{ user.name }}</td>
                             <td>{{ user.email }}</td>
                             <td>{{ user.phone }}</td>
                             <td>{{ user.userType }}</td>
                             <td>
-                               <button @click="this.userEdit(user.id)">Editar</button>
+                               <v-btn variant="text" @click="this.userEdit(user.id)">Editar</v-btn>
                             </td>
                         </tr>
                     </tbody>
                 </v-table>
                 <div class="button-add-div">
-                    <button @click="addUser">Adicionar novo usuário</button>
+                    <v-btn variant="text" color="success"  @click="addUser">Adicionar novo usuário <v-icon icon="mdi-plus" size="large"></v-icon></v-btn>
                 </div>
             </div>
         </div>
@@ -107,11 +108,6 @@ export default {
 .userFormInput {
     border-bottom: 2px solid black;
     height: 40px;
-}
-
-body {
-    padding-top: 20px;
-    padding-left: 20px;
 }
 
 .main {

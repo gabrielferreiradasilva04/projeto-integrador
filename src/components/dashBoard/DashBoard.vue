@@ -1,6 +1,6 @@
 <template>
   <v-card>
-    <v-toolbar color="blue-darken-4">
+    <v-toolbar color="indigo-darken-4">
       <v-toolbar-title>{{ this.welcome }}</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn icon>
@@ -17,7 +17,7 @@
     </v-toolbar>
 
     <v-window v-model="tab">
-      <v-window-item v-for="item in items" :key="item" :value="item.text" >
+      <v-window-item v-for="item in items" :key="item" :value="item.text ">
         
       </v-window-item>
     </v-window>

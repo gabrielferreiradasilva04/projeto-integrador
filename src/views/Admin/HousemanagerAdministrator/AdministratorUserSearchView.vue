@@ -1,54 +1,57 @@
 <template>
-    <v-card class="h-screen pa-6 d-flex flex-column" width="91.25vw">
-        <v-card class="d-flex flex-column ">
-            <v-text-field theme="dark" clearable variant="solo-filled" name="name" label="Nome do Usuário/Equipe"
-                id="teamName" v-model="nameToFind"></v-text-field>
-            <v-btn variant="tonal" color="success" @click="this.searchAllUsers"><v-icon start size="x-large">
-                    mdi-account-search
-                </v-icon>Buscar</v-btn>
+    <v-sheet>
+        <v-card class="h-auto pa-6 d-flex flex-column w-auto" variant="text">
+            <v-card class="d-flex flex-column ">
+                <v-text-field theme="dark" clearable variant="solo-filled" name="name" label="Nome do Usuário/Equipe"
+                    id="teamName" v-model="nameToFind"></v-text-field>
+                <v-btn variant="tonal" color="success" @click="this.searchAllUsers"><v-icon start size="x-large">
+                        mdi-account-search
+                    </v-icon>Buscar</v-btn>
+            </v-card>
+            <br>
+            <v-card>
+                <v-table class="table font-h6" height="400px" :fixed-header="true">
+                    <thead>
+                        <tr>
+                            <th class="text-center">
+                                Nome Completo
+                            </th>
+                            <th class="text-center">
+                                E-mail
+                            </th>
+                            <th class="text-center">
+                                Telefone de Contato
+                            </th>
+                            <th class="text-center">
+                                Tipo de Usuário
+                            </th>
+                            <th class="text-center">
+                                Ações
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-center">
+                        <tr v-for="user in users" :key="user.id">
+                            <td>{{ user.name }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>{{ user.phone }}</td>
+                            <td>{{ user.userType }}</td>
+                            <td>
+                                <v-btn variant="text" color="warning" @click="this.userEdit(user)">Editar</v-btn>
+                            </td>
+                        </tr>
+                    </tbody>
+                </v-table>
+                <v-card-item class="d-flex flex-row-reverse">
+                    <v-btn variant="text" color="success" @click="this.showRegister = true"><v-icon size="x-large">
+                            mdi-account-plus</v-icon></v-btn>
+                </v-card-item>
+            </v-card>
         </v-card>
-        <br>
-        <v-card>
-            <v-table class="table font-h6 elevation-6" height="400px" :fixed-header="true">
-                <thead>
-                    <tr>
-                        <th class="text-center">
-                            Nome Completo
-                        </th>
-                        <th class="text-center">
-                            E-mail
-                        </th>
-                        <th class="text-center">
-                            Telefone de Contato
-                        </th>
-                        <th class="text-center">
-                            Tipo de Usuário
-                        </th>
-                        <th class="text-center">
-                            Ações
-                        </th>
-                    </tr>
-                </thead>
-                <tbody class="text-center">
-                    <tr v-for="user in users" :key="user.id">
-                        <td>{{ user.name }}</td>
-                        <td>{{ user.email }}</td>
-                        <td>{{ user.phone }}</td>
-                        <td>{{ user.userType }}</td>
-                        <td>
-                            <v-btn variant="text" color="warning" @click="this.userEdit(user)">Editar</v-btn>
-                        </td>
-                    </tr>
-                </tbody>
-            </v-table>
-            <v-card-item class="d-flex flex-row-reverse">
-                <v-btn variant="text" color="success" @click="this.showRegister = true"><v-icon size="x-large">
-                        mdi-account-plus</v-icon></v-btn>
-            </v-card-item>
-        </v-card>
-    </v-card>
-    <AdminstratorUserRegisterViewVue v-if="showRegister" @closeRegister="registerClosed" />
-    <AdministratorUserEditViewVue :userToEdit="selectedUserToEdit" v-if="showEdit" @closeEdit="this.showEdit=false" @editClosed="this.editClosed"/>
+        <AdminstratorUserRegisterViewVue v-if="showRegister" @closeRegister="registerClosed" />
+        <AdministratorUserEditViewVue :userToEdit="selectedUserToEdit" v-if="showEdit" @closeEdit="this.showEdit = false"
+            @editClosed="this.editClosed" />
+    </v-sheet>
 </template>
 <script>
 import AdministratorUserEditViewVue from './AdministratorUserEditView.vue';
@@ -97,11 +100,11 @@ export default {
             this.showEdit = true;
             this.selectedUserToEdit = user;
         },
-        editClosed(){
+        editClosed() {
             this.searchAllUsers();
         },
-        registerClosed(){
-            this.showRegister=false;
+        registerClosed() {
+            this.showRegister = false;
             this.searchAllUsers();
 
         }

@@ -1,5 +1,5 @@
 <template>
-    <v-card color="indigo-darken-4">
+    <v-card theme="dark" class="h-screen">
         <div class="flex-row d-flex">
             <v-tabs v-model="tab" direction="vertical" color="primary">
                 <v-tab value="option-1">

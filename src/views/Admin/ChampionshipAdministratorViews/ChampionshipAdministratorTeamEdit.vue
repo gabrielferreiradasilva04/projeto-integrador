@@ -1,5 +1,5 @@
 <template>
-    <v-dialog v-if="showEditDialogView" activator="parent" persistent min-width="500px" max-width="600px">
+    <v-dialog v-if="showEditDialogView" activator="parent" persistent class="w-auto h-auto">
         <v-card class="pa-6 d-flex flex-column" theme="dark">
             <v-card-title>
                 <h1>Dados da Equipe</h1>

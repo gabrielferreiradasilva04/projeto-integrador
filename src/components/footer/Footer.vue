@@ -1,6 +1,6 @@
 <template>
-    <v-footer class="d-flex flex-column m-0 pa-0" >
-        <div class="bg-blue-darken-4 d-flex w-100 align-center px-4">
+    <v-footer class="flex-column m-0 pa-0" :app="true" >
+        <div class="bg-indigo-darken-3 d-flex w-100 align-center px-4">
             <strong>Entre em contato conosco através de nossas redes sociais!</strong>
 
             <v-spacer></v-spacer>
@@ -8,7 +8,7 @@
             <v-btn v-for="icon in icons" :key="icon" class="mx-4" :icon="icon" variant="plain" size="small"></v-btn>
         </div>
 
-        <div class="py-2 bg-blue-darken-4  text-center w-100">
+        <div class="py-2 bg-indigo-darken-4  text-center w-100">
             {{ new Date().getFullYear() }} — <strong>Silva's System</strong>
         </div>
     </v-footer>

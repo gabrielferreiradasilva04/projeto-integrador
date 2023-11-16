@@ -1,7 +1,7 @@
 
 <template>
-    <v-card color="indigo-darken-4" class="h-screen" variant="tonal" width="86.9vw">
-        <v-sheet class="pa-3 h-screen" theme="dark">
+    <v-card class="h-auto w-auto" variant="text" >
+        <v-sheet class="pa-3 h-auto w-auto" theme="dark">
             <v-form ref="form">
                 <v-text-field variant="solo-filled" v-model="user.name" :rules="nameRules" label="Nome da Equipe" required></v-text-field>
 
@@ -11,7 +11,7 @@
                 <v-text-field variant="solo-filled"  v-model="user.email" :rules="nameRules" label="E-mail da equipe" required></v-text-field>
 
                 <v-text-field variant="solo-filled"  v-model="user.password" :counter="8" :rules="nameRules"
-                    label="Defina uma senha para que a equipe acesse o sistema" required
+                    label="Defina uma senha" required
                     :type="'' ? 'text' : 'password'"></v-text-field>
 
                 <v-text-field variant="solo-filled"  v-model="confirmPassword" :counter="8" :rules="nameRules" label="Confirme a senha de acesso"
@@ -152,16 +152,6 @@ export default {
 </script>
 
 <style>
-.userTypeCombo {
-    display: flex;
-    align-items: end;
-    border: 2px solid black;
-    border-radius: 10px;
-    padding: 5px;
-}
 
-.userTypeCombo select {
-    width: 100%;
 
-}
 </style>

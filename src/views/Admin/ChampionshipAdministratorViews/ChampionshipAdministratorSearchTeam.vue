@@ -1,6 +1,6 @@
 <template>
-    <v-card class="pa-6 rounded-0 h-screen" width="86.9vw" theme="dark" color="indigo-darken-4" variant="tonal">
-            <v-card class="w-100 pa-6 rounded-xl">
+    <v-card class="pa-6 rounded-0 h-auto w-auto"  theme="dark" variant="text">
+            <v-card class=" w-auto pa-6 rounded-xl">
                 <v-text-field theme="dark" clearable  variant="solo-filled"  name="name" label="Nome da Equipe" id="teamName"
                     v-model="nameTofind"></v-text-field>
                 <v-btn variant="text" color="success" @click="this.search">
@@ -8,9 +8,9 @@
                 </v-btn>
             </v-card>
             <br>
-            <v-sheet class="pa-3 rounded-xl" elevation="12" theme="dark">
+            <v-sheet class="pa-3 rounded-xl w-auto" elevation="12" theme="dark">
 
-                <v-table class="table" height="auto" density="compact" theme="dark">
+                <v-table class="table" height="auto" density="compact" theme="dark" :fixed-header=true>
                     <thead class="font-weight-bold text-h6">
                         <tr>
                             <th class="text-center">

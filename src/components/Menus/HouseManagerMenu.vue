@@ -1,5 +1,5 @@
 <template>
-    <v-card color="indigo-darken-4">
+    <v-card  theme="dark" class="d-flex flex-row w-auto h-screen">
         <div class="flex-row d-flex">
             <v-tabs v-model="tab" direction="vertical" color="primary">
                 <v-tab value="option-1">
@@ -24,7 +24,6 @@
             <v-window v-model="tab">
                 <v-window-item value="option-1">
                         <AdministratorUserSearchViewVue />
-
                 </v-window-item>
                 <v-window-item value="option-2">
                     <v-card >

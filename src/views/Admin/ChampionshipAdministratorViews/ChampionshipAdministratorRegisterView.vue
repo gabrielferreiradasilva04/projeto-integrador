@@ -110,9 +110,8 @@ export default {
                             this.dialogMessageModal = true;
                             this.dialogMessage = "Cadastro realizado com  sucesso"
                             setTimeout(() => {
-
-                                this.$router.push('/administrator-home');
-                            }, 2000);
+                                this.reset()
+                            }, 1000);
 
                         }
                         if (res.status === 404) {

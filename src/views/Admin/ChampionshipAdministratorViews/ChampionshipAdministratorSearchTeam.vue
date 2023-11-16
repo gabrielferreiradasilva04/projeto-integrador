@@ -1,19 +1,16 @@
 <template>
-    <body>
-        <div class="main">
-
-            <div class="form-search">
-                    <v-text-field  theme="dark"  clearable variant="outlined" name="name" label="Nome da Equipe" id="teamName"
-                        v-model="nameTofind"></v-text-field>
-
-                <v-btn color="success" @click="this.search">
+    <v-card class="pa-6 rounded-0 h-screen" width="86.9vw" theme="dark" color="indigo-darken-4" variant="tonal">
+            <v-card class="w-100 pa-6 rounded-xl">
+                <v-text-field theme="dark" clearable  variant="solo-filled"  name="name" label="Nome da Equipe" id="teamName"
+                    v-model="nameTofind"></v-text-field>
+                <v-btn variant="text" color="success" @click="this.search">
                     Pesquisar
                 </v-btn>
-            </div>
+            </v-card>
+            <br>
+            <v-sheet class="pa-3 rounded-xl" elevation="12" theme="dark">
 
-            <v-sheet class="pa-3 rounded-xl" elevation="24" theme="dark">
-
-                <v-table class="table" height="200px" fixed-header="" density="compact" theme="dark">
+                <v-table class="table" height="auto" density="compact" theme="dark">
                     <thead class="font-weight-bold text-h6">
                         <tr>
                             <th class="text-center">
@@ -36,21 +33,23 @@
                             <td>{{ team.email }}</td>
                             <td>{{ team.phone }}</td>
                             <td>
-                                <v-btn variant="text" color="warning" @click="this.edit(team.id)">Editar</v-btn>
+                                <v-btn variant="text" color="warning" @click="this.edit(team)">Editar</v-btn>
                             </td>
                         </tr>
                     </tbody>
                 </v-table>
             </v-sheet>
-        </div>
-    </body>
+    </v-card>
     <!--Componente de mensagem-->
     <Message :infoMessage="this.infoMessage" v-if="showMessage" @closeMessageDialog="this.showMessage = false" />
+    <championship-administrator-team-edit-vue :team="this.teamToEdit" v-if="showEditDialog" @closeEditDialog="this.showEditDialog = false" />
+
 </template>
 <script>
 import Message from '@/components/dialogs/Message.vue'
+import ChampionshipAdministratorTeamEditVue from './ChampionshipAdministratorTeamEdit.vue'
 export default {
-    components: { Message },
+    components: { Message, ChampionshipAdministratorTeamEditVue },
     data() {
         return {
             teams: [],
@@ -58,7 +57,9 @@ export default {
 
             //dialog
             infoMessage: '',
-            showMessage: false
+            showMessage: false,
+            showEditDialog: false,
+            teamToEdit:{}
         }
     },
     methods: {
@@ -84,8 +85,9 @@ export default {
                 this.showMessage = true;
             })
         },
-        edit(id) {
-            this.$router.push('/championship-administrator-team-edit/' + id)
+        edit(teamSelected) {
+            this.teamToEdit = teamSelected;
+            this.showEditDialog = true;
         }
     }
 }

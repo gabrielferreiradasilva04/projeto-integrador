@@ -1,5 +1,5 @@
 <template>
-    <v-footer class="d-flex flex-column my-footer">
+    <v-footer class="d-flex flex-column m-0 pa-0" >
         <div class="bg-blue-darken-4 d-flex w-100 align-center px-4">
             <strong>Entre em contato conosco através de nossas redes sociais!</strong>
 
@@ -9,7 +9,7 @@
         </div>
 
         <div class="py-2 bg-blue-darken-4  text-center w-100">
-            {{ new Date().getFullYear() }} — <strong>ArranqueForte.Bet</strong>
+            {{ new Date().getFullYear() }} — <strong>Silva's System</strong>
         </div>
     </v-footer>
 </template>
@@ -22,6 +22,7 @@ export default {
             'mdi-linkedin',
             'mdi-instagram',
         ],
+        appvariable:true
     }),
 }
 </script>

@@ -4,7 +4,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 export const routes = [
   {
     path: '/administrator-home',
-    component: () => import('@/views/Admin/HousemanagerAdministrator/AdministratorHomeView.vue'),
+    component: () => import('@/components/Menus/HouseManagerMenu.vue'),
   },
   {
     path: '/register',
@@ -56,7 +56,7 @@ export const routes = [
   },
   {
     path: '/championship-administrator-home',
-    component: () => import('../views/Admin/ChampionshipAdministratorViews/ChampionshipAdministratorHome.vue'),
+    component: () => import('@/components/Menus/ChampionshipAdminMenu.vue'),
   },
   {
     path: '/championship-administrator-team-edit/:id',

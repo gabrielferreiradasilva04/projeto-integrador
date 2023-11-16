@@ -1,106 +1,76 @@
 <template>
-    <body>
-        <div class="main">
-            <v-sheet width="30%" class="pa-3 rounded-xl" elevation="24" theme="dark">
-                <div class="title ">
-                    <h1>Dados da Equipe</h1>
-                </div>
-                <v-form class="align-center">
-                    <v-text-field label="Nome da Equipe" v-model="this.team.name"></v-text-field>
-                    <v-text-field label="E-mail" v-model="this.team.email"></v-text-field>
-                    <v-text-field label="Telefone" v-model="this.team.phone"></v-text-field>
-                    <v-text-field label="Documento do Responsável" v-model="this.team.document"></v-text-field>
-                    <v-text-field label="Data de Ingresso" v-model="this.team.registerDate"></v-text-field>
+    <v-dialog v-if="showEditDialogView" activator="parent" persistent min-width="500px" max-width="600px">
+        <v-card class="pa-6 d-flex flex-column" theme="dark">
+            <v-card-title>
+                <h1>Dados da Equipe</h1>
+            </v-card-title>
+            <v-sheet class="pa-6">
+                <v-form>
+                    <v-text-field variant="solo-filled" label="Nome da Equipe" v-model="this.teamEdit.name"></v-text-field>
+                    <v-text-field variant="solo-filled" label="E-mail" v-model="this.teamEdit.email"></v-text-field>
+                    <v-text-field variant="solo-filled" label="Telefone" v-model="this.teamEdit.phone"></v-text-field>
+                    <v-text-field variant="solo-filled" label="Documento do Responsável"
+                        v-model="this.teamEdit.document"></v-text-field>
+                    <v-text-field variant="solo-filled" label="Data de Ingresso"
+                        v-model="this.teamEdit.registerDate"></v-text-field>
 
                 </v-form>
             </v-sheet>
-            <v-sheet width="50%" class="pa-3 rounded-xl" elevation="24" theme="dark">
-                <div class="title">
-                    <h1>Membros</h1>
-                </div>
-                <v-card>
-                    <v-tabs v-model="tab" bg-color="blue-darken-4">
-                        <v-tab value="one">Pilotos</v-tab>
-                    </v-tabs>
-                    <v-card-text>
-                        <v-window v-model="tab">
-                            <v-window-item value="one">
-                                <PilotsTable :pilotsList="this.pilots" />
-                                <div class="add-member">
-                                    <v-btn variant="text" color="success" @click="this.showChoose = true">Adicionar <v-icon
-                                            icon="mdi-plus" size="large"></v-icon></v-btn>
-                                </div>
-                            </v-window-item>
-
-
-
-                        </v-window>
-                    </v-card-text>
-                </v-card>
-
+            <v-card-title>
+                <h1>Pilotos</h1>
+            </v-card-title>
+            <v-sheet class="pa-6 " theme="dark">
+                <PilotsTable :pilotsList="this.pilots" @updateList="this.getTeamPilots" />
+                <br>
+                <v-btn variant="text" color="success" @click="this.showChoose = true">Adicionar <v-icon icon="mdi-plus"
+                        size="large"></v-icon></v-btn>
             </v-sheet>
-            <ChooseUser v-if="this.showChoose"
-            @closeMessageDialog="this.showChoose = false"
-            @selectClose="this.selectClosed" />
 
+            <ChooseUser v-if="this.showChoose" @returnChooseDialog="this.returnChooseDialog"
+                @selectClosed="this.selectClosed" @closeChooseDialog="this.showChoose = false" />
 
-
-        </div>
-        <div class="button-box">
-            <v-btn color="success">Salvar alterações</v-btn>
-            <v-btn color="warning">Retornar</v-btn>
-        </div>
-    </body>
+            <v-card-actions class="d-flex flex-column">
+                <v-btn variant="text" @click="saveChanges(this.pilots)" color="success">Salvar alterações</v-btn>
+                <v-btn variant="text" @click="$emit('closeEditDialog')" color="warning">Retornar</v-btn>
+            </v-card-actions>
+        </v-card>
+        <Message v-if="this.showMessage" @closeMessageDialog="this.showMessage = false" :infoMessage="this.infoMessage" />
+    </v-dialog>
 </template>
 <script>
 import ChooseUser from '@/components/chooseUser/ChooseUser.vue'
 import PilotsTable from '@/components/tables/pilots/PilotsTable.vue'
 import PreparerTable from '@/components/tables/preparers/PreparerTable.vue'
+import Message from '@/components/dialogs/Message.vue'
 
 
 export default {
-    components: { ChooseUser, PilotsTable, PreparerTable },
+    props: ['team'],
+    components: { ChooseUser, PilotsTable, PreparerTable, Message },
     data() {
         return {
-            team: {},
+            teamEdit: {},
             showChoose: false,
             users: [],
             pilots: [],
             tab: null,
+            showEditDialogView: true,
+            showMessage: false,
+            infoMessage: ''
         }
     },
     methods: {
-        async getTeam() {
-            await fetch('http://localhost:8081/User/' + this.$route.params.id)
-                .then(res => res.json())
-                .then(data => {
-                    this.team = data;
-                    console.log(this.team)
-                })
-            this.getTeamPilots();
-        },
-        async getUsers() {
-            await fetch('http://localhost:8081/User', {
-                method: 'GET',
-                headers: { 'Content-type': 'application/json' },
-            }).then(res => res.json())
-                .then(data => {
-                    this.users = data;
-                }).catch(res => {
-                    alert("Não foi possível concluir a busca")
-                });
-        },
         async getTeamPilots() {
             var teamToSearch = {
-                id: this.team.id,
-                name: this.team.name,
-                document: this.team.document,
-                email: this.team.email,
-                registerDate: this.team.registerDate,
-                password: this.team.password,
-                phone: this.team.phone,
-                userType: this.team.userType,
-                uf: this.team.uf
+                id: this.teamEdit.id,
+                name: this.teamEdit.name,
+                document: this.teamEdit.document,
+                email: this.teamEdit.email,
+                registerDate: this.teamEdit.registerDate,
+                password: this.teamEdit.password,
+                phone: this.teamEdit.phone,
+                userType: this.teamEdit.userType,
+                uf: this.teamEdit.uf
             }
 
             await fetch('http://localhost:8081/Pilot/find-team-pilots', {
@@ -110,24 +80,89 @@ export default {
             }).then(res => res.json())
                 .then(data => {
                     this.pilots = data;
-                    console.log(this.pilots)
                 }).catch(res => {
-                    alert("Não foi possível concluir a busca")
+                    this.infoMessage = 'Não foi possível localizar os pilotos'
+                    this.showMessage
                 });
         },
+        returnChooseDialog() {
+            this.showChoose = false;
+            localStorage.setItem('chooseUser', null)
+        },
+        selectClosed() {
+            var storageUser = JSON.parse(localStorage.getItem('chooseUser'))
+            if (storageUser != null) {
+                var findExistentPilot = false;
+                for (var i = 0; i < this.pilots.length; i++) {
+                    if (storageUser.id == this.pilots.at(i).id) {
+                        findExistentPilot = true;
+                    }
+                }
+                if (findExistentPilot == false) {
+                    this.pilots.push(storageUser)
+                    localStorage.setItem('chooseUser', null)
+                } else {
+                    this.infoMessage = "piloto já vinculado na equipe"
+                    this.showMessage = true;
+                }
 
-        selectClosed(){
 
-                var storageUser = JSON.parse(localStorage.getItem('chooseUser'))
-                this.pilots.push(storageUser);
-                console.log(storageUser);
-            
+
+            }
+
+        },
+        async putPilot(pilot) {
+            var teamToSearch = {
+                id: this.teamEdit.id,
+                name: this.teamEdit.name,
+                document: this.teamEdit.document,
+                email: this.teamEdit.email,
+                registerDate: this.teamEdit.registerDate,
+                password: this.teamEdit.password,
+                phone: this.teamEdit.phone,
+                userType: this.teamEdit.userType,
+                uf: this.teamEdit.uf
+            }
+            pilot.team = teamToSearch;
+            console.log(pilot)
+            await fetch('http://localhost:8081/Pilot/' + pilot.id, {
+                method: 'PUT',
+                headers: { 'Content-type': 'application/json' },
+                body: JSON.stringify(pilot)
+            }).then(res => {
+                if (res.status === 200) {
+
+                }
+            })
+        },
+        async excludepilot(pilot) {
+            pilot.team = null;
+            await fetch('http://localhost:8081/Pilot/' + pilot.id, {
+                method: 'PUT',
+                headers: { 'Content-type': 'application/json' },
+                body: JSON.stringify(pilot)
+            }).then(res => {
+                if (res.status === 200) {
+                    this.getTeamPilots();
+                }
+            })
+        },
+        saveChanges(pilots) {
+            for (var i = 0; i < pilots.length; i++) {
+                console.log(this.putPilot(pilots.at(i)))
+            }
+            this.infoMessage = 'Alterações salvas com sucesso!'
+            this.showMessage = true;
+            setTimeout(() => {
+                this.$emit('closeEditDialog')
+            }, 2000);
+
         }
     },
 
     beforeMount() {
-        this.getTeam();
-        this.getUsers();
+        this.teamEdit = this.team;
+        this.getTeamPilots();
     }
 }
 

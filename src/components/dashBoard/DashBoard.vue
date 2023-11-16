@@ -64,10 +64,9 @@ export default {
 
           if (this.user.userType === "HOUSEMANAGER") {
             this.items = [
-              { text: 'Admin Home', path: '/administrator-home' },
-              { text: 'Gerenciar Usuários', path: '/administrator-user-search' },
+              { text: 'Home', path: '/administrator-home' },
             ]
-            this.welcome = 'Painel de Controle Administrativo';
+            this.welcome = 'Gerência da Casa';
           }
           if (this.user.userType === "BETTOR") {
             this.items = [
@@ -79,11 +78,9 @@ export default {
           }
           if (this.user.userType === "CHAMPIONSHIPADMINISTRATOR") {
             this.items = [
-              { text: 'Admin Home', path: '/championship-administrator-home' },
-              { text: 'Gerenciar Equipes', path: '/championship-administrator-register' },
-              { text: 'Gerenciar Campeonatos da Região', path: '/my-bets' },
+              { text: 'Admin Home', path: '/championship-administrator-home' }
             ]
-            this.welcome = "Painel de Controle Administrativo de Campeonatos"
+            this.welcome = "Administração de Campeonatos"
           }
         })
       } else {

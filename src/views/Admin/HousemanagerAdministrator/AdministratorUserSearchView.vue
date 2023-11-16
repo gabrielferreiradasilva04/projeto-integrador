@@ -1,67 +1,76 @@
 <template>
-    <body>
-        
-        <div class="main">
-            <div class="users-form-box">
-                <form action="" class="users-form">
-                    <input type="text" name="" id="" class="userFormInput" placeholder="nome do usuario" v-model="nameToFind">
-                   <button id="search-button" @click="this.searchAllUsers">Buscar</button>
-                </form>
-            </div>
-            <div class="tableUsers">
-                <v-table class="table font-h6">
-                    <thead>
-                        <tr>
-                            <th class="text-center">
-                                    Nome Completo
-                            </th>
-                            <th class="text-center">
-                                E-mail
-                            </th>
-                            <th class="text-center">
-                                Telefone de Contato
-                            </th>
-                            <th class="text-center">
-                                Tipo de Usuário
-                            </th>
-                            <th class="text-center">
-                                Ações
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody class="text-center">
-                        <tr v-for="user in users" :key="user.id">
-                            <td>{{ user.name }}</td>
-                            <td>{{ user.email }}</td>
-                            <td>{{ user.phone }}</td>
-                            <td>{{ user.userType }}</td>
-                            <td>
-                               <v-btn variant="text" @click="this.userEdit(user.id)">Editar</v-btn>
-                            </td>
-                        </tr>
-                    </tbody>
-                </v-table>
-                <div class="button-add-div">
-                    <v-btn variant="text" color="success"  @click="addUser">Adicionar novo usuário <v-icon icon="mdi-plus" size="large"></v-icon></v-btn>
-                </div>
-            </div>
-        </div>
-    </body>
+    <v-card class="h-screen pa-6 d-flex flex-column" width="91.25vw">
+        <v-card class="d-flex flex-column ">
+            <v-text-field theme="dark" clearable variant="solo-filled" name="name" label="Nome do Usuário/Equipe"
+                id="teamName" v-model="nameToFind"></v-text-field>
+            <v-btn variant="tonal" color="success" @click="this.searchAllUsers"><v-icon start size="x-large">
+                    mdi-account-search
+                </v-icon>Buscar</v-btn>
+        </v-card>
+        <br>
+        <v-card>
+            <v-table class="table font-h6 elevation-6" height="400px" :fixed-header="true">
+                <thead>
+                    <tr>
+                        <th class="text-center">
+                            Nome Completo
+                        </th>
+                        <th class="text-center">
+                            E-mail
+                        </th>
+                        <th class="text-center">
+                            Telefone de Contato
+                        </th>
+                        <th class="text-center">
+                            Tipo de Usuário
+                        </th>
+                        <th class="text-center">
+                            Ações
+                        </th>
+                    </tr>
+                </thead>
+                <tbody class="text-center">
+                    <tr v-for="user in users" :key="user.id">
+                        <td>{{ user.name }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.phone }}</td>
+                        <td>{{ user.userType }}</td>
+                        <td>
+                            <v-btn variant="text" color="warning" @click="this.userEdit(user)">Editar</v-btn>
+                        </td>
+                    </tr>
+                </tbody>
+            </v-table>
+            <v-card-item class="d-flex flex-row-reverse">
+                <v-btn variant="text" color="success" @click="this.showRegister = true"><v-icon size="x-large">
+                        mdi-account-plus</v-icon></v-btn>
+            </v-card-item>
+        </v-card>
+    </v-card>
+    <AdminstratorUserRegisterViewVue v-if="showRegister" @closeRegister="registerClosed" />
+    <AdministratorUserEditViewVue :userToEdit="selectedUserToEdit" v-if="showEdit" @closeEdit="this.showEdit=false" @editClosed="this.editClosed"/>
 </template>
 <script>
+import AdministratorUserEditViewVue from './AdministratorUserEditView.vue';
+import AdminstratorUserRegisterViewVue from './AdminstratorUserRegisterView.vue';
+
+
 
 export default {
+    components: { AdminstratorUserRegisterViewVue, AdministratorUserEditViewVue },
+
     data() {
         return {
             users: [],
             nameToFind: '',
+            showRegister: false,
+            showEdit: false,
+            selectedUserToEdit: null
         }
     },
 
     methods: {
-        async searchAllUsers(e) {
-
-            e.preventDefault();
+        async searchAllUsers() {
 
             if (this.nameToFind === '') {
                 await fetch('http://localhost:8081/User', {
@@ -84,18 +93,19 @@ export default {
 
                 })
         },
-        userEdit(id){
-
-            this.$router.push('/administrator-user-edit/'+id)
+        userEdit(user) {
+            this.showEdit = true;
+            this.selectedUserToEdit = user;
         },
-        addUser(e){
-
-            e.preventDefault();
-
-            this.$router.push('/administrator-user-register');
+        editClosed(){
+            this.searchAllUsers();
+        },
+        registerClosed(){
+            this.showRegister=false;
+            this.searchAllUsers();
 
         }
-    }
+    },
 
 }
 
@@ -114,39 +124,40 @@ export default {
     display: flex;
     flex-direction: column;
 }
-td button{
-    border: 2px solid black;
-    border-radius: 10px;
-    width: 100px;
-    height: 25px;
-}
-.users-form-box{
+
+
+
+.users-form-box {
     display: flex;
     align-items: center;
     justify-content: center;
 }
-form{
+
+form {
     padding: 10px;
     display: flex;
     flex-direction: column;
     width: 60%;
     gap: 20px;
 }
-#search-button{
+
+#search-button {
     border: 2px solid black;
     border-radius: 10px;
     width: 20%;
 }
 
-.button-add-div{
-    align-items: center;;
+.button-add-div {
+    align-items: center;
+    ;
     display: flex;
     width: 100%;
     justify-content: end;
     padding-top: 40px;
     padding-right: 50px;
 }
-.button-add-div button{
+
+.button-add-div button {
     border: 2px black solid;
     border-radius: 20px;
     width: 250px;
@@ -155,6 +166,4 @@ form{
 
 
 }
-
-
 </style>

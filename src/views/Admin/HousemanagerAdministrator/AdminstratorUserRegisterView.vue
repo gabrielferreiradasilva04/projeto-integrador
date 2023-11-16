@@ -1,27 +1,30 @@
 
 <template>
-    <body>
-
-        <v-container class="pa-6 ">
-            <h1>Registro de Usuários</h1>
+    <v-dialog v-if="showRegisterDialog" activator="parent" persistent min-width="600px" max-width="800px">
+        <v-card class="pa-6 d-flex flex-column rounded-xl">
+            <v-card-title>
+                <h1>Registro de Usuários</h1>
+            </v-card-title>
+            <br>
             <v-sheet width="100%" class="form">
 
                 <v-form ref="form">
-                    <v-text-field v-model="user.name" :rules="nameRules" label="Nome completo" required></v-text-field>
-
-                    <v-text-field v-model="user.document" :rules="nameRules" label="CPF" v-mask="['###.###.###-##']"
+                    <v-text-field variant="solo-filled" v-model="user.name" :rules="nameRules" label="Nome completo"
                         required></v-text-field>
 
-                    <v-text-field v-model="user.email" :rules="nameRules" label="E-mail para contato"
+                    <v-text-field variant="solo-filled" v-model="user.document" :rules="nameRules" label="CPF"
+                        v-mask="['###.###.###-##']" required></v-text-field>
+
+                    <v-text-field variant="solo-filled" v-model="user.email" :rules="nameRules" label="E-mail para contato"
                         required></v-text-field>
 
-                    <v-text-field v-model="user.password" :counter="8" :rules="nameRules" label="Defina uma senha de acesso"
-                        required :type="'' ? 'text' : 'password'"></v-text-field>
+                    <v-text-field variant="solo-filled" v-model="user.password" :counter="8" :rules="nameRules"
+                        label="Defina uma senha de acesso" required :type="'' ? 'text' : 'password'"></v-text-field>
 
-                    <v-text-field v-model="confirmPassword" :counter="8" :rules="nameRules"
+                    <v-text-field variant="solo-filled" v-model="confirmPassword" :counter="8" :rules="nameRules"
                         label="Confirme a senha de acesso" required :type="'' ? 'text' : 'password'"></v-text-field>
 
-                    <v-text-field v-model="user.phone" :rules="nameRules" label="Telfone para contato"
+                    <v-text-field variant="solo-filled" v-model="user.phone" :rules="nameRules" label="Telfone para contato"
                         v-mask="['(##)#####-####']" required></v-text-field>
 
                     <div class="combo-div">
@@ -68,16 +71,18 @@
                     <v-checkbox v-model="checkbox" :rules="[v => !!v || 'Você precisa concordar para continuar']"
                         label="Li e aceito os termos de uso" required @click="this.termsDialog = true"></v-checkbox>
 
-                    <div class="d-flex flex-column button-div">
+                    <v-card-actions class="d-flex flex-row-reverse">
                         <v-btn color="success" class="button-system" @click="validate">
                             Concluir
                         </v-btn>
-                        
-                        <v-btn color="warning" class="button-system"  @click="this.reset">
+
+                        <v-btn color="warning" class="button-system" @click="this.reset">
                             Limpar Campos
                         </v-btn>
+                        <v-btn @click="$emit('closeRegister')"><v-icon>mdi-keyboard-return</v-icon></v-btn>
+                    </v-card-actions>
 
-                    </div>
+
                 </v-form>
             </v-sheet>
             <!--Componente de notificação-->
@@ -85,8 +90,8 @@
                 @closeMessageDialog="this.dialogMessageModal = false" />
             <!--Componente termos-->
             <Terms @closeTermsDialog="this.termsDialog = false" v-if="termsDialog" />
-        </v-container>
-    </body>
+        </v-card>
+    </v-dialog>
 </template>
   
 <script>
@@ -122,7 +127,8 @@ export default {
         dialogMessageModal: false,
         termsDialog: false,
         //combo
-        showUf: false
+        showUf: false,
+        showRegisterDialog: true
 
 
 
@@ -141,10 +147,10 @@ export default {
                     this.dialogMessage = "As senhas não conferem"
 
                 } else {
-                    if(this.user.uf === ''){
+                    if (this.user.uf === '') {
                         this.user.uf = null;
                     }
-                    if(this.user.userType === ''){
+                    if (this.user.userType === '') {
                         this.user.userType = null;
                     }
 
@@ -161,10 +167,8 @@ export default {
                             this.dialogMessageModal = true;
                             this.dialogMessage = "Parabéns! Cadastro realizado com sucesso"
                             setTimeout(() => {
-
-                                this.$router.push('/administrator-home');
-
-                            }, 2000);
+                                this.$emit('closeRegister')
+                            }, 1000);
 
                         }
                         if (res.status === 404) {
@@ -180,8 +184,10 @@ export default {
                             })))
 
                         }
-                    })).catch((res =>
-                        console.log(res.json())))
+                    })).catch((res =>{
+                        this.dialogMessage = 'Algo deu errado, tente novamente mais tarde'
+                        this.dialogMessageModal = true
+                    }))
                 }
             }
 
@@ -224,6 +230,9 @@ export default {
     border: 2px solid black;
     border-radius: 10px;
     padding: 10px;
+    color: black;
+    background-color: gray;
+    font-weight: bold;
 }
 
 #userUF {
@@ -232,6 +241,10 @@ export default {
     border: 2px solid black;
     border-radius: 10px;
     padding: 10px;
+    color: black;
+    background-color: gray;
+    font-weight: bold;
+
 }
 
 .combo-div {
@@ -245,6 +258,4 @@ export default {
     display: flex;
     gap: 10px;
 }
-
-
 </style>

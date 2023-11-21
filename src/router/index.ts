@@ -48,19 +48,20 @@ export const routes = [
   },
   {
     path: '/championship-administrator-championships',
-    component: () => import('../views/Admin/ChampionshipAdministratorViews/ChampionshipAdministratorChampionshipsView.vue'),
+    component: () => import('../views/Admin/ChampionshipAdministratorViews/Championships/ChampionshipAdministratorChampionshipsView.vue'),
   },
   {
     path: '/championship-administrator-championships-add',
-    component: () => import('../views/Admin/ChampionshipAdministratorViews/ChampionshipAdministratorAddChampionship.vue'),
+    component: () => import('../views/Admin/ChampionshipAdministratorViews/Championships/ChampionshipAdministratorAddChampionship.vue'),
   },
   {
     path: '/championship-administrator-home',
     component: () => import('@/components/Menus/ChampionshipAdminMenu.vue'),
   },
+
   {
-    path: '/championship-administrator-team-edit/:id',
-    component: () => import('../views/Admin/ChampionshipAdministratorViews/ChampionshipAdministratorTeamEdit.vue'),
+    path: '/appbar',
+    component: () => import('@/components/dashBoard/MainBarView.vue'),
   },
   
   

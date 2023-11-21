@@ -1,8 +1,7 @@
 
 <template>
     <v-dialog v-if="showRegisterDialog" activator="parent" persistent class="w-auto h-auto">
-        <v-sheet class="rounded-xl w-auto h-auto">
-            <v-card class="pa-6 d-flex flex-column rounded-xl w-auto">
+        <v-sheet class="pa-6 d-flex flex-column rounded-xl" width="60%" >
                 <v-card-title>
                     <h1>Registro de Usuários</h1>
                 </v-card-title>
@@ -92,7 +91,6 @@
                     @closeMessageDialog="this.dialogMessageModal = false" />
                 <!--Componente termos-->
                 <Terms @closeTermsDialog="this.termsDialog = false" v-if="termsDialog" />
-            </v-card>
         </v-sheet>
     </v-dialog>
 </template>

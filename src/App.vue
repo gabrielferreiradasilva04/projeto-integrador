@@ -1,16 +1,13 @@
 <template>
   <v-app theme="dark">
-    <DashBoard v-if="notIsLoginOrRegister" />
-    <router-view />
-    <Footer v-if="notIsLoginOrRegister" />
+   <MainBar />
   </v-app>
 </template>
 
 <script>
-import DashBoard from "./components/dashBoard/DashBoard.vue";
-import Footer from "./components/footer/Footer.vue";
+import MainBar from './components/dashBoard/MainBarView.vue'
 export default {
-  components: { DashBoard, Footer },
+  components: { MainBar },
 
   computed: {
     notIsLoginOrRegister() {

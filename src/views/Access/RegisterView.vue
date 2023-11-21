@@ -75,8 +75,6 @@ export default {
         dialogMessageModal: false,
         termsDialog: false
 
-
-
     }),
 
     methods: {

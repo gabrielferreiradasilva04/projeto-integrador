@@ -1,18 +1,17 @@
 <template>
-    <v-container class="h-100">
+    <v-container class="h-100 d-flex flex-column">
         <v-card variant="tonal" color="deep-purple-darken-1" class="rounded-x" width="100%">
             <v-card-subtitle>
                 <h3>Filtros</h3>
             </v-card-subtitle>
-            <v-card class="d-flex flex-row pa-2 ">
-
+            <v-card class="pa-2">
                 <v-row>
                     <v-col>
                         <v-text-field theme="dark" clearable variant="solo-filled" name="name"
                             label="Nome do Usuário/Equipe" id="teamName" v-model="name"></v-text-field>
 
-                        <v-text-field theme="dark" clearable variant="solo-filled" name="phone" label="Telefone" id="phone"
-                            v-model="phone" v-mask="['(##)#####-####']"></v-text-field>
+                        <v-text-field class="w-100" theme="dark" clearable variant="solo-filled" name="phone"
+                            label="Telefone" id="phone" v-model="phone" v-mask="['(##)#####-####']"></v-text-field>
 
                         <v-select clearable label='Estado'
                             :items="['PR', 'SP', 'SC', 'RS', 'MS', 'RO', 'AC', 'AM', 'RR', 'PA', 'TO', 'MA', 'RN', 'PB', 'PE', 'AL', 'SE', 'BA', 'MG', 'RJ', 'MT', 'GO', 'DF', 'PI', 'CE', 'ES']"
@@ -25,11 +24,9 @@
                         <v-text-field theme="dark" clearable variant="solo-filled" name="name" label="CPF" id="cpf"
                             v-model="document" v-mask="['###.###.###-##']"></v-text-field>
 
-                        <v-select clearable label='Tipo de Usuário'
-                            :items="['HOUSEMANAGER', 'BETTOR', 'CHAMPIONSHIPADMINISTRATOR', 'TEAM']" variant='solo-filled'
-                            v-model="userType"></v-select>
                     </v-col>
                 </v-row>
+
             </v-card>
             <v-card-actions class="d-flex flex-column">
                 <v-btn variant="tonal" class="w-100" color="success" @click="this.filter"><v-icon start size="x-large">
@@ -38,96 +35,84 @@
             </v-card-actions>
             <br>
             <v-card>
-                <v-table class="table font-h6 " max-height="500px" :fixed-header="true">
+                <v-table class="table font-h6 " max-height="500px" fixed-header>
                     <thead>
                         <tr>
                             <th class="text-center">
-                                Nome Completo
+                                Nome da Equipe
                             </th>
                             <th class="text-center">
-                                E-mail
+                                E-mail da Equipe
                             </th>
                             <th class="text-center">
                                 Telefone de Contato
-                            </th>
-                            <th class="text-center">
-                                Tipo de Usuário
                             </th>
                             <th class="text-center">
                                 Ações
                             </th>
                         </tr>
                     </thead>
-                    <tbody class="text-center">
-                        <tr v-for=" user  in  users " :key="user.id">
-                            <td>{{ user.name }}</td>
-                            <td>{{ user.email }}</td>
-                            <td>{{ user.phone }}</td>
-                            <td>{{ user.userType }}</td>
+                    <tbody font-weight-bold class="text-center">
+                        <tr v-for="team in teams" :key="team.id">
+                            <td>{{ team.name }}</td>
+                            <td>{{ team.email }}</td>
+                            <td>{{ team.phone }}</td>
                             <td>
-                                <v-btn variant="text" color="warning" @click="this.userEdit(user)">Editar</v-btn>
+                                <v-btn variant="text" color="warning" @click="this.edit(team)">Editar</v-btn>
                             </td>
                         </tr>
                     </tbody>
                 </v-table>
             </v-card>
-            <v-btn variant="text" color="success" @click="this.showRegister = true"><v-icon size="x-large">
-                    mdi-account-plus</v-icon></v-btn>
-            <AdminstratorUserRegisterViewVue v-if="showRegister" @closeRegister="registerClosed" />
-            <AdministratorUserEditViewVue :userToEdit="selectedUserToEdit" v-if="showEdit"
-                @closeEdit="this.showEdit = false" @editClosed="this.editClosed" />
+            <v-card-item>
+                <v-btn variant="text" color="success" @click="this.showRegisterDialog = true"><v-icon size="x-large">
+                        mdi-account-plus</v-icon></v-btn>
+                <v-btn variant="text" color="success" @click="this.filter"><v-icon size="x-large">
+                        mdi-update</v-icon></v-btn>
+            </v-card-item>
         </v-card>
-        <Message :infoMessage="this.infoMessage" v-if="this.showMessage" @closeMessageDialog="this.showMessage = false" />
+        <!--Componente de mensagem-->
+        <Message :infoMessage="this.infoMessage" v-if="showMessage" @closeMessageDialog="this.showMessage = false" />
+        <championship-administrator-team-edit-vue :team="this.teamToEdit" v-if="showEditDialog"
+            @closeEditDialog="this.showEditDialog = false, this.teams = null" />
+        <ChampionshipAdministratorRegisterViewVue v-if="this.showRegisterDialog"
+            @closeRegisterDialog="this.closeRegisterDialogMethod" />
     </v-container>
 </template>
 <script>
-import AdministratorUserEditViewVue from './AdministratorUserEditView.vue';
-import AdminstratorUserRegisterViewVue from './AdminstratorUserRegisterView.vue';
-import { mask } from 'vue-the-mask'
 import Message from '@/components/dialogs/Message.vue'
-
-
-
+import ChampionshipAdministratorTeamEditVue from './ChampionshipAdministratorTeamEdit.vue'
+import ChampionshipAdministratorRegisterViewVue from './ChampionshipAdministratorRegisterView.vue'
+import { mask } from 'vue-the-mask'
 
 export default {
-    components: { AdminstratorUserRegisterViewVue, AdministratorUserEditViewVue, Message },
-
+    components: { Message, ChampionshipAdministratorTeamEditVue, ChampionshipAdministratorRegisterViewVue },
     data() {
         return {
-            users: [],
+            teams: [],
+            nameTofind: "",
+
+            //dialog
+            infoMessage: '',
+            showMessage: false,
+            showEditDialog: false,
+            teamToEdit: {},
+            showRegisterDialog: false,
+            //fields to filter
             name: null,
             email: null,
             phone: null,
-            userType: null,
             document: null,
-            uf: null,
-            showRegister: false,
-            showEdit: false,
-            selectedUserToEdit: null,
-            showMessage: false,
-            infoMessage: ''
+            uf: null
         }
     },
-
     methods: {
-        userEdit(user) {
-            this.showEdit = true;
-            this.selectedUserToEdit = user;
-        },
-        editClosed() {
-            this.users = []
-        },
-        registerClosed() {
-            this.showRegister = false;
-            this.users = []
-
-        },
         async filter() {
-            if (this.name == null && this.email == null & this.phone == null && this.document == null && this.userType == null && this.uf == null) {
+            if (this.name == null && this.email == null && this.phone == null && this.document == null && this.uf == null) {
                 this.infoMessage = 'Preencha ao menos um dos filtros acima'
                 this.showMessage = true
             } else {
-                var stringToFetch = 'http://localhost:8081/User/user-filter?'
+                var stringToFetch = 'http://localhost:8081/User/user-filter?userType=TEAM&'
                 var append = '&'
                 if (this.name != null) {
                     stringToFetch = stringToFetch + 'name=' + this.name + append
@@ -141,28 +126,42 @@ export default {
                 if (this.document != null) {
                     stringToFetch = stringToFetch + 'document=' + this.document + append
                 }
-                if (this.userType != null) {
-                    stringToFetch = stringToFetch + 'userType=' + this.userType + append
-                }
                 if (this.uf != null) {
                     stringToFetch = stringToFetch + 'uf=' + this.uf + append
                 }
 
-
                 await fetch(stringToFetch, {
                     method: 'GET',
                     headers: { 'Content-type': 'application/json' },
-                }).then(res => res.json().then(data => {
-                    this.users = data;
- 
+                }).then(res => {
+                    if(res.status === 200){
+                        res.json().then(data =>{
+                            this.teams = data;
+                        })
+                    }else{
+                        this.infoMessage = 'Sua pesquisa com esses filtros não retornou resultados'
+                        this.showMessage = true;
+                        this.teams = null;
+                    }
                 }).catch(res => {
+                    this.infoMessage = 'Erro ao realizar busca, tente novamente mais tarde'
                     this.showMessage = true;
-                    this.infoMessage = 'Não foi possível concluir a busca, cheque os filtros'
+                    this.teams = null;
                 })
-
-                )
             }
 
+        },
+        edit(selectedTeam) {
+            this.teamToEdit = selectedTeam;
+            this.showEditDialog = true;
+        },
+        closeRegisterDialogMethod() {
+            this.showRegisterDialog = false;
+            this.teams = [];
+        },
+        closeEditDialogMethod(){
+            this.showEditDialog = false;
+            this.teams = [];
         }
     },
     directives: {
@@ -170,62 +169,24 @@ export default {
     }
 
 }
-
 </script>
 
-
-
-
 <style scoped>
-.userFormInput {
-    border-bottom: 2px solid black;
-    height: 40px;
-}
-
 .main {
     display: flex;
     flex-direction: column;
-}
-
-
-
-.users-form-box {
-    display: flex;
-    align-items: center;
     justify-content: center;
 }
 
-form {
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    width: 60%;
-    gap: 20px;
+.form-search {
+    width: 30%;
 }
 
-#search-button {
-    border: 2px solid black;
-    border-radius: 10px;
-    width: 20%;
+.title {
+    padding-left: 20px;
 }
 
-.button-add-div {
-    align-items: center;
-    ;
-    display: flex;
-    width: 100%;
-    justify-content: end;
-    padding-top: 40px;
-    padding-right: 50px;
-}
-
-.button-add-div button {
-    border: 2px black solid;
-    border-radius: 20px;
-    width: 250px;
-    height: 35px;
-    color: orange;
-
-
+h1 {
+    font-size: 25px;
 }
 </style>

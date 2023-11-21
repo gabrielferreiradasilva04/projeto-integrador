@@ -1,6 +1,6 @@
 <template>
-    <v-dialog v-if="showEditDialogView" activator="parent" persistent class="w-auto h-auto">
-        <v-card class="pa-6 d-flex flex-column" theme="dark">
+    <v-dialog v-if="showEditDialogView" activator="parent" persistent class="w-auto h-auto " max-width="60%">
+        <v-card class="pa-6 d-flex flex-column rounded-xl" theme="dark">
             <v-card-title>
                 <h1>Dados da Equipe</h1>
             </v-card-title>
@@ -8,11 +8,15 @@
                 <v-form>
                     <v-text-field variant="solo-filled" label="Nome da Equipe" v-model="this.teamEdit.name"></v-text-field>
                     <v-text-field variant="solo-filled" label="E-mail" v-model="this.teamEdit.email"></v-text-field>
-                    <v-text-field variant="solo-filled" label="Telefone" v-model="this.teamEdit.phone"></v-text-field>
-                    <v-text-field variant="solo-filled" label="Documento do Responsável"
+                    <v-text-field v-mask="['(##)#####-####']" variant="solo-filled" label="Telefone"
+                        v-model="this.teamEdit.phone"></v-text-field>
+                    <v-text-field v-mask="['###.###.###-##']" variant="solo-filled" label="Documento do Responsável"
                         v-model="this.teamEdit.document"></v-text-field>
                     <v-text-field variant="solo-filled" label="Data de Ingresso"
                         v-model="this.teamEdit.registerDate"></v-text-field>
+                    <v-select clearable label='Estado'
+                        :items="['PR', 'SP', 'SC', 'RS', 'MS', 'RO', 'AC', 'AM', 'RR', 'PA', 'TO', 'MA', 'RN', 'PB', 'PE', 'AL', 'SE', 'BA', 'MG', 'RJ', 'MT', 'GO', 'DF', 'PI', 'CE', 'ES']"
+                        variant='solo-filled' v-model="this.teamEdit.uf"></v-select>
 
                 </v-form>
             </v-sheet>
@@ -29,9 +33,12 @@
             <ChooseUser v-if="this.showChoose" @returnChooseDialog="this.returnChooseDialog"
                 @selectClosed="this.selectClosed" @closeChooseDialog="this.showChoose = false" />
 
-            <v-card-actions class="d-flex flex-column">
+            <v-card-actions class="d-flex flex-row-reverse">
                 <v-btn variant="text" @click="saveChanges(this.pilots)" color="success">Salvar alterações</v-btn>
-                <v-btn variant="text" @click="$emit('closeEditDialog')" color="warning">Retornar</v-btn>
+                <v-btn variant="text" @click="$emit('closeEditDialog')"
+                    color="warning"><v-icon>mdi-keyboard-return</v-icon></v-btn>
+                <v-btn variant="text" color="error" @click="this.deleteTeam"><v-icon
+                        size="x-large">mdi-delete</v-icon></v-btn>
             </v-card-actions>
         </v-card>
         <Message v-if="this.showMessage" @closeMessageDialog="this.showMessage = false" :infoMessage="this.infoMessage" />
@@ -42,6 +49,7 @@ import ChooseUser from '@/components/chooseUser/ChooseUser.vue'
 import PilotsTable from '@/components/tables/pilots/PilotsTable.vue'
 import PreparerTable from '@/components/tables/preparers/PreparerTable.vue'
 import Message from '@/components/dialogs/Message.vue'
+import { mask } from 'vue-the-mask'
 
 
 export default {
@@ -155,15 +163,44 @@ export default {
             this.showMessage = true;
             setTimeout(() => {
                 this.$emit('closeEditDialog')
-            }, 2000);
+            }, 1000);
 
+        },
+        async deleteTeam() {
+            await fetch('http://localhost:8081/User/' + this.teamEdit.id, {
+
+                method: 'DELETE',
+                headers: { 'Content-type': 'application/json' },
+            }).then(res => {
+                if (res.status === 200) {
+                    this.infoMessage = 'Equipe Deletada'
+                    this.showMessage = true;
+
+                    setTimeout(() => {
+                        this.$emit('closeEditDialog')
+                    }, 1000);
+
+
+                } else {
+                    this.infoMessage = 'Essa equipe possui vínculos.\nCorte os vínculos e tente novamente'
+                    this.showMessage = true
+                }
+
+            }).catch(res => {
+                this.infoMessage = 'Erro ao deletar equipe, tente novamente mais tarde'
+                this.showMessage = true;
+            })
         }
     },
 
     beforeMount() {
         this.teamEdit = this.team;
         this.getTeamPilots();
+    },
+    directives: {
+        mask
     }
+
 }
 
 </script>

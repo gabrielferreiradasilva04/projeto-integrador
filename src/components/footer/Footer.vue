@@ -1,5 +1,5 @@
 <template>
-    <v-footer class="flex-column m-0 pa-0" :app="true" >
+    <v-footer class="flex-column m-0 pa-0 my-footer">
         <div class="bg-indigo-darken-3 d-flex w-100 align-center px-4">
             <strong>Entre em contato conosco através de nossas redes sociais!</strong>
 
@@ -27,12 +27,7 @@ export default {
 }
 </script>
 <style scoped>
-.my-footer{
-    background-color: black;
-    margin: 0;
-    padding: 0;
-    
-}
+
 
 
 </style>

@@ -1,5 +1,5 @@
 <template>
-    <v-table class="table elevation-24" height="300px" theme="dark">
+    <v-table class="table elevation-24" height="300px" theme="dark" fixed-header>
         <thead class="font-weight-bold text-h6">
             <tr>
                 <th class="text-justfy">
@@ -18,13 +18,13 @@
                 </td>
             </tr>
         </tbody>
-        <Message :infoMessage="this.infoMessage" v-if="this.showMessage" @closeMessageDialog="this.showMessage = false"/>
+        <Message :infoMessage="this.infoMessage" v-if="this.showMessage" @closeMessageDialog="this.showMessage = false" />
     </v-table>
 </template>
 <script>
 import Message from '@/components/dialogs/Message.vue'
 export default {
-    components:{Message},
+    components: { Message },
     props: ['pilotsList'],
     data() {
         return {
@@ -34,7 +34,7 @@ export default {
         }
     },
     methods: {
-        async excludepilot(pilot){
+        async excludepilot(pilot) {
             pilot.team = null;
             await fetch('http://localhost:8081/Pilot/' + pilot.id, {
                 method: 'PUT',
@@ -46,7 +46,7 @@ export default {
                     this.showMessage = true;
                     this.$emit('updateList')
                 }
-            }).catch(res =>{
+            }).catch(res => {
                 this.infoMessage = 'Erro ao desvincular piloto'
                 this.showMessage = true;
             })

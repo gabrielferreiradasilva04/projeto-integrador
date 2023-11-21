@@ -1,28 +1,27 @@
 <template>
-    <v-card  theme="dark" class="d-flex flex-row w-auto h-screen">
-        <div class="flex-row d-flex">
-            <v-tabs v-model="tab" direction="vertical" color="primary">
+    <v-card  theme="dark" class="d-flex flex-row" height="100%" width="100%" variant="text">
+            <v-tabs v-model="tab" direction="vertical" color="primary" class="w-auto h-100">
                 <v-tab value="option-1">
-                    <v-icon start>
+                    <v-icon start size="x-large">
                         mdi-account-group
                     </v-icon>
                     Usuários
                 </v-tab>
                 <v-tab value="option-2">
-                    <v-icon start>
+                    <v-icon start size="x-large">
                         mdi-currency-usd
                     </v-icon>
                     Financeiro
                 </v-tab>
                 <v-tab value="option-3">
-                    <v-icon start>
+                    <v-icon start size="x-large">
                         mdi-access-point
                     </v-icon>
                     Option 3
                 </v-tab>
             </v-tabs>
-            <v-window v-model="tab">
-                <v-window-item value="option-1">
+            <v-window v-model="tab" continuous class="w-100 border rounded-xl elevation-24">
+                <v-window-item value="option-1" >
                         <AdministratorUserSearchViewVue />
                 </v-window-item>
                 <v-window-item value="option-2">
@@ -30,7 +29,6 @@
                     </v-card>
                 </v-window-item>
             </v-window>
-        </div>
     </v-card>
 </template>
 

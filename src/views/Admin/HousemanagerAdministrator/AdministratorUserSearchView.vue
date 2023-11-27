@@ -1,6 +1,6 @@
 <template>
     <v-container class="h-100">
-        <v-card variant="tonal" color="deep-purple-darken-1" class="rounded-x" width="100%">
+        <v-card variant="tonal" color="light-blue-darken-2" class="rounded-x" width="100%">
             <v-card-subtitle>
                 <h3>Filtros</h3>
             </v-card-subtitle>
@@ -92,6 +92,7 @@ import Message from '@/components/dialogs/Message.vue'
 export default {
     components: { AdminstratorUserRegisterViewVue, AdministratorUserEditViewVue, Message },
 
+
     data() {
         return {
             users: [],
@@ -152,15 +153,16 @@ export default {
                 await fetch(stringToFetch, {
                     method: 'GET',
                     headers: { 'Content-type': 'application/json' },
-                }).then(res => res.json().then(data => {
-                    this.users = data;
- 
+                }).then(res => {
+                    if (res.status === 200) {
+                        res.json().then(data => {
+                            this.users = data;
+                        })
+                    }
                 }).catch(res => {
+                    this.infoMessage = 'Erro ao realizar pesquisa'
                     this.showMessage = true;
-                    this.infoMessage = 'Não foi possível concluir a busca, cheque os filtros'
                 })
-
-                )
             }
 
         }

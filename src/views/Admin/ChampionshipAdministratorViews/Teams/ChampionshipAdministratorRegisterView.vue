@@ -56,10 +56,18 @@
 import { mask } from 'vue-the-mask'
 import Message from '@/components/dialogs/Message.vue';
 import Terms from '@/components/dialogs/Terms.vue';
+import { ref, inject } from 'vue'
+
 
 
 export default {
+    setup() {
+        const userStore = inject('userStore')
+        return {
+            userStore
+        }
 
+    },
     data: () => ({
         name: 'ChampionshipAdministratorRegister',
         nameRules: [
@@ -122,6 +130,7 @@ export default {
                             setTimeout(() => {
                                 this.reset()
                                 this.$emit('closeRegisterDialog')
+                                this.userStore.methods.getTeams();
                             }, 1000);
 
                         }

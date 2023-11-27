@@ -6,8 +6,15 @@
 
 <script>
 import MainBar from './components/dashBoard/MainBarView.vue'
+import UserStore from '@/store/UserStore'
+import { provide } from 'vue';
 export default {
   components: { MainBar },
+
+  setup(){
+    provide('userStore', UserStore )
+
+  },
 
   computed: {
     notIsLoginOrRegister() {

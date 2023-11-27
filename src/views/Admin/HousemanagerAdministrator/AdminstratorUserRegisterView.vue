@@ -1,96 +1,94 @@
 
 <template>
-    <v-dialog v-if="showRegisterDialog" activator="parent" persistent class="w-auto h-auto">
-        <v-sheet class="pa-6 d-flex flex-column rounded-xl" width="60%" >
-                <v-card-title>
-                    <h1>Registro de Usuários</h1>
-                </v-card-title>
-                <br>
-                <v-sheet class="form w-auto">
-                    <v-form ref="form">
-                        <v-text-field variant="solo-filled" v-model="user.name" :rules="nameRules" label="Nome completo"
-                            required></v-text-field>
+    <v-dialog v-if="showRegisterDialog" activator="parent" persistent class="w-auto h-auto " max-width="60%">
+        <v-sheet class="pa-6 d-flex flex-column rounded-xl">
+            <v-card-title>
+                <h1>Registro de Usuários</h1>
+            </v-card-title>
+            <br>
+            <v-sheet class="form w-auto">
+                <v-form ref="form">
+                    <v-text-field variant="solo-filled" v-model="user.name" :rules="nameRules" label="Nome completo"
+                        required></v-text-field>
 
-                        <v-text-field variant="solo-filled" v-model="user.document" :rules="nameRules" label="CPF"
-                            v-mask="['###.###.###-##']" required></v-text-field>
+                    <v-text-field variant="solo-filled" v-model="user.document" :rules="nameRules" label="CPF"
+                        v-mask="['###.###.###-##']" required></v-text-field>
 
-                        <v-text-field variant="solo-filled" v-model="user.email" :rules="nameRules"
-                            label="E-mail para contato" required></v-text-field>
+                    <v-text-field variant="solo-filled" v-model="user.email" :rules="nameRules" label="E-mail para contato"
+                        required></v-text-field>
 
-                        <v-text-field variant="solo-filled" v-model="user.password" :counter="8" :rules="nameRules"
-                            label="Defina uma senha de acesso" required :type="'' ? 'text' : 'password'"></v-text-field>
+                    <v-text-field variant="solo-filled" v-model="user.password" :counter="8" :rules="nameRules"
+                        label="Defina uma senha de acesso" required :type="'' ? 'text' : 'password'"></v-text-field>
 
-                        <v-text-field variant="solo-filled" v-model="confirmPassword" :counter="8" :rules="nameRules"
-                            label="Confirme a senha de acesso" required :type="'' ? 'text' : 'password'"></v-text-field>
+                    <v-text-field variant="solo-filled" v-model="confirmPassword" :counter="8" :rules="nameRules"
+                        label="Confirme a senha de acesso" required :type="'' ? 'text' : 'password'"></v-text-field>
 
-                        <v-text-field variant="solo-filled" v-model="user.phone" :rules="nameRules"
-                            label="Telfone para contato" v-mask="['(##)#####-####']" required></v-text-field>
+                    <v-text-field variant="solo-filled" v-model="user.phone" :rules="nameRules" label="Telfone para contato"
+                        v-mask="['(##)#####-####']" required></v-text-field>
 
-                        <div class="combo-div">
-                            <select name="userType" id="userType" v-model="this.user.userType"
-                                @click="this.listenerUserType">
-                                <option value="" disabled selected>Tipo de usuário</option>
-                                <option value="0">Administrador de Campeonatos</option>
-                                <option value="1">Administrador da Casa</option>
-                                <option value="2">Apostador</option>
-                                <option value="3">Equipe</option>
-                            </select>
+                    <div class="combo-div">
+                        <select name="userType" id="userType" v-model="this.user.userType" @click="this.listenerUserType">
+                            <option value="" disabled selected>Tipo de usuário</option>
+                            <option value="0">Administrador de Campeonatos</option>
+                            <option value="1">Administrador da Casa</option>
+                            <option value="2">Apostador</option>
+                            <option value="3">Equipe</option>
+                        </select>
 
-                            <select style="display: none;" name="userUF" id="userUF" v-model="this.user.uf"
-                                :rules="nameRules">
-                                <option value="" disabled selected>Estado de Administração</option>
-                                <option value="PR">PR</option>
-                                <option value="SP">SP</option>
-                                <option value="SC">SC</option>
-                                <option value="RS">RS</option>
-                                <option value="MS">MS</option>
-                                <option value="RO">RO</option>
-                                <option value="AC">AC</option>
-                                <option value="AM">AM</option>
-                                <option value="RR">RR</option>
-                                <option value="PA">AP</option>
-                                <option value="TO">TO</option>
-                                <option value="MA">MA</option>
-                                <option value="RN">RN</option>
-                                <option value="PB">PB</option>
-                                <option value="PE">PE</option>
-                                <option value="AL">AL</option>
-                                <option value="SE">SE</option>
-                                <option value="BA">BA</option>
-                                <option value="MG">MG</option>
-                                <option value="RJ">RJ</option>
-                                <option value="MT">RJ</option>
-                                <option value="GO">GO</option>
-                                <option value="DF">DF</option>
-                                <option value="PI">PI</option>
-                                <option value="CE">CE</option>
-                                <option value="ES">ES</option>
+                        <select style="display: none;" name="userUF" id="userUF" v-model="this.user.uf" :rules="nameRules">
+                            <option value="" disabled selected>Estado de Administração</option>
+                            <option value="PR">PR</option>
+                            <option value="SP">SP</option>
+                            <option value="SC">SC</option>
+                            <option value="RS">RS</option>
+                            <option value="MS">MS</option>
+                            <option value="RO">RO</option>
+                            <option value="AC">AC</option>
+                            <option value="AM">AM</option>
+                            <option value="RR">RR</option>
+                            <option value="PA">AP</option>
+                            <option value="TO">TO</option>
+                            <option value="MA">MA</option>
+                            <option value="RN">RN</option>
+                            <option value="PB">PB</option>
+                            <option value="PE">PE</option>
+                            <option value="AL">AL</option>
+                            <option value="SE">SE</option>
+                            <option value="BA">BA</option>
+                            <option value="MG">MG</option>
+                            <option value="RJ">RJ</option>
+                            <option value="MT">RJ</option>
+                            <option value="GO">GO</option>
+                            <option value="DF">DF</option>
+                            <option value="PI">PI</option>
+                            <option value="CE">CE</option>
+                            <option value="ES">ES</option>
 
-                            </select>
-                        </div>
-                        <br>
-                        <v-checkbox v-model="checkbox" :rules="[v => !!v || 'Você precisa concordar para continuar']"
-                            label="Li e aceito os termos de uso" required @click="this.termsDialog = true"></v-checkbox>
+                        </select>
+                    </div>
+                    <br>
+                    <v-checkbox v-model="checkbox" :rules="[v => !!v || 'Você precisa concordar para continuar']"
+                        label="Li e aceito os termos de uso" required @click="this.termsDialog = true"></v-checkbox>
 
-                        <v-card-actions class="d-flex flex-row-reverse">
-                            <v-btn color="success" class="button-system" @click="validate">
-                                Concluir
-                            </v-btn>
+                    <v-card-actions class="d-flex flex-row-reverse">
+                        <v-btn color="success" class="button-system" @click="validate">
+                            Concluir
+                        </v-btn>
 
-                            <v-btn color="warning" class="button-system" @click="this.reset">
-                                Limpar Campos
-                            </v-btn>
-                            <v-btn @click="$emit('closeRegister')"><v-icon>mdi-keyboard-return</v-icon></v-btn>
-                        </v-card-actions>
+                        <v-btn color="warning" class="button-system" @click="this.reset">
+                            Limpar Campos
+                        </v-btn>
+                        <v-btn @click="$emit('closeRegister')"><v-icon>mdi-keyboard-return</v-icon></v-btn>
+                    </v-card-actions>
 
 
-                    </v-form>
-                </v-sheet>
-                <!--Componente de notificação-->
-                <Message :infoMessage="this.dialogMessage" v-if="dialogMessageModal"
-                    @closeMessageDialog="this.dialogMessageModal = false" />
-                <!--Componente termos-->
-                <Terms @closeTermsDialog="this.termsDialog = false" v-if="termsDialog" />
+                </v-form>
+            </v-sheet>
+            <!--Componente de notificação-->
+            <Message :infoMessage="this.dialogMessage" v-if="dialogMessageModal"
+                @closeMessageDialog="this.dialogMessageModal = false" />
+            <!--Componente termos-->
+            <Terms @closeTermsDialog="this.termsDialog = false" v-if="termsDialog" />
         </v-sheet>
     </v-dialog>
 </template>
@@ -100,11 +98,19 @@
 import { mask } from 'vue-the-mask'
 import Message from '@/components/dialogs/Message.vue';
 import Terms from '@/components/dialogs/Terms.vue';
+import { ref, inject } from 'vue'
+
 
 
 
 export default {
 
+    setup() {
+        const userStore = inject('userStore')
+        return {
+            userStore
+        }
+    },
     data: () => ({
         nameRules: [
             v => !!v || 'Campo obrigatório',
@@ -169,6 +175,7 @@ export default {
                             this.dialogMessage = "Parabéns! Cadastro realizado com sucesso"
                             setTimeout(() => {
                                 this.$emit('closeRegister')
+                                this.userStore.methods.getTeams();
                             }, 1000);
 
                         }

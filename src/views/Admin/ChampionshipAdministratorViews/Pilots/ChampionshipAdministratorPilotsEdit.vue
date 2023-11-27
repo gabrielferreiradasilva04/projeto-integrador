@@ -45,10 +45,21 @@
 <script>
 import { mask } from 'vue-the-mask'
 import Message from '@/components/dialogs/Message.vue'
+import { ref, inject } from 'vue'
+
 
 export default {
     components: { Message },
     props: ['pilotToEdit', 'teams'],
+    setup() {
+
+        const userStore = inject('userStore')
+        userStore.methods.getTeams();
+        return {
+            userStore
+        }
+
+    },
     data() {
         return {
             nameRules: [
@@ -93,6 +104,7 @@ export default {
                     this.infoMessage = 'Alterações salvas com sucesso';
                     this.showMessage = true;
                     setTimeout(() => {
+                        this.userStore.getPilots();
                         this.$emit('closeEditDialog')
                     }, 1000);
 
@@ -117,6 +129,7 @@ export default {
                     this.infoMessage = 'Piloto deletado com sucesso!'
                     this.showMessage = true;
                     setTimeout(() => {
+                        this.userStore.getPilots();
                         this.$emit('closeEditDialog')
                     }, 1000);
                 } else {

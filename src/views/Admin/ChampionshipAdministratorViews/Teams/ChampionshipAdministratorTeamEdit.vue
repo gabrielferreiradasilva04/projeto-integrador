@@ -5,7 +5,7 @@
                 <h1>Dados da Equipe</h1>
             </v-card-title>
             <v-sheet class="pa-6">
-                <v-form>
+                <v-form ref="form">
                     <v-text-field variant="solo-filled" label="Nome da Equipe" v-model="this.teamEdit.name"></v-text-field>
                     <v-text-field variant="solo-filled" label="E-mail" v-model="this.teamEdit.email"></v-text-field>
                     <v-text-field v-mask="['(##)#####-####']" variant="solo-filled" label="Telefone"
@@ -50,11 +50,22 @@ import PilotsTable from '@/components/tables/pilots/PilotsTable.vue'
 import PreparerTable from '@/components/tables/preparers/PreparerTable.vue'
 import Message from '@/components/dialogs/Message.vue'
 import { mask } from 'vue-the-mask'
+import { ref, inject } from 'vue'
+
 
 
 export default {
     props: ['team'],
     components: { ChooseUser, PilotsTable, PreparerTable, Message },
+
+    setup() {
+        const userStore = inject('userStore')
+        return {
+            userStore
+        }
+
+    },
+
     data() {
         return {
             teamEdit: {},
@@ -159,12 +170,26 @@ export default {
             for (var i = 0; i < pilots.length; i++) {
                 console.log(this.putPilot(pilots.at(i)))
             }
+            this.editTeam();
+            this.userStore.methods.getTeams();
             this.infoMessage = 'Alterações salvas com sucesso!'
             this.showMessage = true;
             setTimeout(() => {
                 this.$emit('closeEditDialog')
             }, 1000);
 
+        },
+        async editTeam() {
+            await fetch('http://localhost:8081/User/' + this.teamEdit.id, {
+
+                method: 'PUT',
+                headers: { 'Content-type': 'application/json' },
+                body: JSON.stringify(this.teamEdit)
+            }).then(res =>{
+                if(res.status === 200){
+                    console.log('ok')
+                }
+            })
         },
         async deleteTeam() {
             await fetch('http://localhost:8081/User/' + this.teamEdit.id, {
@@ -175,9 +200,9 @@ export default {
                 if (res.status === 200) {
                     this.infoMessage = 'Equipe Deletada'
                     this.showMessage = true;
-
                     setTimeout(() => {
                         this.$emit('closeEditDialog')
+                        this.userStore.methods.getTeams();
                     }, 1000);
 
 
@@ -192,6 +217,9 @@ export default {
             })
         }
     },
+    reset() {
+            this.$refs.form.reset()
+        },
 
     beforeMount() {
         this.teamEdit = this.team;

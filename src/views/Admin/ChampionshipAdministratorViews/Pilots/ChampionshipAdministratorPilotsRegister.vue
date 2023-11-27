@@ -26,7 +26,7 @@
                         <v-btn variant="text" color="warning"
                             @click="$emit('closeRegisterDialog')"><v-icon>mdi-keyboard-return</v-icon></v-btn>
 
-                        <v-btn @click="this.reset()" color="warning" variant="text">
+                        <v-btn @click="this.reset" color="warning" variant="text">
                             Limpar Campos
                         </v-btn>
                         <v-btn @click="this.validate" variant="text" color="success">

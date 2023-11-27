@@ -1,36 +1,38 @@
 <template>
     <v-container class="h-100 d-flex flex-column">
-        <v-card variant="tonal" color="deep-purple-darken-1" class="rounded-x" width="100%">
+        <v-card variant="tonal" color="light-blue-darken-2" class="rounded-x" width="100%">
             <v-card-subtitle>
-                Filtros
+                <h3>Filtros</h3>
             </v-card-subtitle>
             <v-card class="d-flex flex-column pa-2">
-                <v-row>
-                    <v-col>
-                        <v-text-field theme="dark" clearable variant="solo-filled" name="name" label="Nome do piloto"
-                            id="name" v-model="name" :rules="[v => !!v || 'Nome inválido']"></v-text-field>
+                <v-form ref="form">
+                    <v-row>
+                        <v-col>
+                            <v-text-field theme="dark" clearable variant="solo-filled" name="pilotname" label="Nome do piloto"
+                                id="pilotname" v-model="name" :rules="[v => !!v || 'Nome inválido']"></v-text-field>
 
-                        <v-text-field class="w-100" theme="dark" clearable variant="solo-filled" name="nickname"
-                            label="Apelido" id="nickname" v-model="nickname"
-                            :rules="[v => !!v || 'Apelido inválido']"></v-text-field>
+                            <v-text-field class="w-100" theme="dark" clearable variant="solo-filled" name="nickname"
+                                label="Apelido" id="nickname" v-model="nickname"
+                                :rules="[v => !!v || 'Apelido inválido']"></v-text-field>
 
-                        <v-select clearable label='Estado de atuação do piloto'
-                            :items="['PR', 'SP', 'SC', 'RS', 'MS', 'RO', 'AC', 'AM', 'RR', 'PA', 'TO', 'MA', 'RN', 'PB', 'PE', 'AL', 'SE', 'BA', 'MG', 'RJ', 'MT', 'GO', 'DF', 'PI', 'CE', 'ES']"
-                            variant='solo-filled' theme="dark" v-model="uf"
-                            :rules="[v => !!v || 'selecione um estado']"></v-select>
-                    </v-col>
-                    <v-col>
+                            <v-select clearable label='Estado de atuação do piloto'
+                                :items="['PR', 'SP', 'SC', 'RS', 'MS', 'RO', 'AC', 'AM', 'RR', 'PA', 'TO', 'MA', 'RN', 'PB', 'PE', 'AL', 'SE', 'BA', 'MG', 'RJ', 'MT', 'GO', 'DF', 'PI', 'CE', 'ES']"
+                                variant='solo-filled' theme="dark" v-model="uf"
+                                :rules="[v => !!v || 'selecione um estado']"></v-select>
+                        </v-col>
+                        <v-col>
 
-                        <v-text-field theme="dark" clearable variant="solo-filled" name="name" label="CPF" id="cpf"
-                            v-model="document" v-mask="['###.###.###-##']"
-                            :rules="[v => !!v || 'CPF inválido']"></v-text-field>
+                            <v-text-field theme="dark" clearable variant="solo-filled" name="cpf" label="CPF" id="cpf"
+                                v-model="document" v-mask="['###.###.###-##']"
+                                :rules="[v => !!v || 'CPF inválido']"></v-text-field>
 
-                        <v-select variant="solo-filled" placeholder="Equipe do piloto"
-                            :rules="[v => !!v || 'Selecione uma equipe']" theme="dark" clearable="" :items="this.teams"
-                            item-title="name" v-model="this.team" return-object>
-                        </v-select>
-                    </v-col>
-                </v-row>
+                            <v-select variant="solo-filled" placeholder="Equipe do piloto"
+                                :rules="[v => !!v || 'Selecione uma equipe']" theme="dark" clearable=""
+                                :items="this.userStore.state.teamsList" item-title="name" v-model="this.team" return-object>
+                            </v-select>
+                        </v-col>
+                    </v-row>
+                </v-form>
             </v-card>
 
             <v-card-actions class="d-flex flex-column">
@@ -58,7 +60,7 @@
                             <td>{{ pilot.name }}</td>
                             <td>{{ pilot.nickname }}</td>
                             <td class="text-center">
-                                <v-btn variant="text" color="error" @click="this.edit(pilot)">Editar</v-btn>
+                                <v-btn variant="text" color="warning" @click="this.edit(pilot)">Editar</v-btn>
                             </td>
                         </tr>
                     </tbody>
@@ -72,7 +74,8 @@
             </v-card-item>
         </v-card>
         <Message :infoMessage="this.infoMessage" v-if="this.showMessage" @closeMessageDialog="this.showMessage = false" />
-        <ChampionshipAdministratorPilotsEditVue :teams="this.teams" :pilotToEdit="this.selectedPilot" v-if="this.showEditDialog" @closeEditDialog="this.showEditDialog = false, this.pilots = null" />
+        <ChampionshipAdministratorPilotsEditVue :teams="userStore.state.teamsList" :pilotToEdit="this.selectedPilot"
+            v-if="this.showEditDialog" @closeEditDialog="this.showEditDialog = false, this.pilots = null" />
         <ChampionshipAdministratorPilotsRegisterVue v-if="this.showRegister"
             @closeRegisterDialog="this.showRegister = false, this.pilots = null" />
     </v-container>
@@ -84,9 +87,20 @@ import Message from '@/components/dialogs/Message.vue';
 import PilotsTableVue from '@/components/tables/pilots/PilotsTable.vue';
 import ChampionshipAdministratorPilotsEditVue from './ChampionshipAdministratorPilotsEdit.vue';
 import ChampionshipAdministratorPilotsRegisterVue from './ChampionshipAdministratorPilotsRegister.vue';
+import { inject } from 'vue'
 
 export default {
     components: { Message, PilotsTableVue, ChampionshipAdministratorPilotsEditVue, ChampionshipAdministratorPilotsRegisterVue },
+
+    setup() {
+
+        const userStore = inject('userStore')
+        userStore.methods.getTeams();
+        return {
+            userStore
+        }
+
+    },
     data() {
         return {
             name: null,
@@ -102,12 +116,15 @@ export default {
             infoMessage: '',
             showEditDialog: false,
             showRegister: false,
-            selectedPilot:{},
+            selectedPilot: {},
             //table
             pilots: []
         }
     },
     methods: {
+        reset() {
+            this.$refs.form.reset()
+        },
         async getTeams() {
             await fetch('http://localhost:8081/teams', {
                 method: 'GET',
@@ -153,12 +170,14 @@ export default {
                     if (res.status === 200) {
                         res.json().then(data => {
                             this.pilots = data;
+                            this.reset()
                         })
                     } else {
                         res.json().then(data => {
                             this.infoMessage = data.message;
                             this.showMessage = true;
                             this.pilots = null;
+                            this.reset()
 
                         })
                     }
@@ -166,6 +185,7 @@ export default {
                     this.infoMessage = 'Sua pesquisa não retornou resultados'
                     this.showMessage = true;
                     this.pilots = null;
+                    this.reset();
                 })
             }
 
@@ -175,13 +195,12 @@ export default {
             this.showEditDialog = true;
         }
     },
-    beforeMount() {
-        this.getTeams();
 
-    },
     directives: {
         mask
-    }
+    },
+
+
 }
 
 

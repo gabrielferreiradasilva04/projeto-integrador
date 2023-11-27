@@ -1,72 +1,73 @@
 <template>
     <v-dialog v-model="showUserEdit" min-width="600px" max-width="700px" class="elevation-24">
         <v-sheet class="h-auto pa-6 rounded-xl elevation-12">
-                <v-card-title>
-                    <h1>Perfil de Usuário</h1>
-                </v-card-title>
-                <v-card class="d-flex flex-column text-justfy" theme="dark">
-                    <v-card-text><v-icon size="x-large">mdi-identifier</v-icon> {{ user.id }}</v-card-text>
-                    <v-card-text><v-icon size="x-large">mdi-account</v-icon>{{ user.name }}</v-card-text>
-                    <v-card-text><v-icon size="x-large">mdi-email</v-icon>{{ user.email }}</v-card-text>
-                    <v-card-text><v-icon size="x-large">mdi-card-account-details</v-icon> {{ user.document }}</v-card-text>
-                    <v-card-text><v-icon size="x-large">mdi-calendar-range</v-icon> {{ user.registerDate }}</v-card-text>
-    
-                    <v-text-field v-mask="['(##)#####-####']" v-model="user.phone" variant="outlined"><v-icon
-                            size="x-large">mdi-phone</v-icon></v-text-field>
-    
-    
-                    <v-card class="" variant="text">
-    
-                        <select name="userType" id="userType" v-model="this.user.userType" @click="this.listenerUserType">
-                            <option value="" disabled selected>Tipo do usuário</option>
-                            <option value="CHAMPIONSHIPADMINISTRATOR">Administrador de Campeonatos</option>
-                            <option value="HOUSEMANAGER">Administrador da Casa</option>
-                            <option value="BETTOR">Apostador</option>
-                            <option value="TEAM">Equipe</option>
-                        </select>
-                    </v-card>
-                    <br>
-                    <v-card>
-                        <select style="display: none;" name="userUF" id="userUF" v-model="this.user.uf">
-                            <option value='' disabled selected>Estado de Administração</option>
-                            <option value="PR">PR</option>
-                            <option value="SP">SP</option>
-                            <option value="SC">SC</option>
-                            <option value="RS">RS</option>
-                            <option value="MS">MS</option>
-                            <option value="RO">RO</option>
-                            <option value="AC">AC</option>
-                            <option value="AM">AM</option>
-                            <option value="RR">RR</option>
-                            <option value="PA">AP</option>
-                            <option value="TO">TO</option>
-                            <option value="MA">MA</option>
-                            <option value="RN">RN</option>
-                            <option value="PB">PB</option>
-                            <option value="PE">PE</option>
-                            <option value="AL">AL</option>
-                            <option value="SE">SE</option>
-                            <option value="BA">BA</option>
-                            <option value="MG">MG</option>
-                            <option value="RJ">RJ</option>
-                            <option value="MT">RJ</option>
-                            <option value="GO">GO</option>
-                            <option value="DF">DF</option>
-                            <option value="PI">PI</option>
-                            <option value="CE">CE</option>
-                            <option value="ES">ES</option>
-                        </select>
-                    </v-card>
-    
-                    <br>
-                    <v-card class="d-flex flex-row-reverse" variant="flat">
-                        <v-btn color="success" variant="text" @click="this.updateUser">Salvar alterações</v-btn>
-                        <v-btn color="error" variant="text" @click="this.deleteUser">Deletar</v-btn>
-                        <v-btn variant="text" color="warning"
-                            @click="$emit('closeEdit')"><v-icon>mdi-keyboard-return</v-icon></v-btn>
-                    </v-card>
+            <v-card-title>
+                <h1>Perfil de Usuário</h1>
+            </v-card-title>
+            <v-card class="d-flex flex-column text-justfy" theme="dark">
+                <v-card-text><v-icon size="x-large">mdi-identifier</v-icon> {{ user.id }}</v-card-text>
+                <v-card-text><v-icon size="x-large">mdi-account</v-icon>{{ user.name }}</v-card-text>
+                <v-card-text><v-icon size="x-large">mdi-email</v-icon>{{ user.email }}</v-card-text>
+                <v-card-text><v-icon size="x-large">mdi-card-account-details</v-icon> {{ user.document }}</v-card-text>
+                <v-card-text><v-icon size="x-large">mdi-calendar-range</v-icon> {{ user.registerDate }}</v-card-text>
+
+                <v-text-field v-mask="['(##)#####-####']" v-model="user.phone" variant="outlined"><v-icon
+                        size="x-large">mdi-phone</v-icon></v-text-field>
+
+
+                <v-card class="" variant="text">
+
+                    <select name="userType" id="userType" v-model="this.user.userType" @click="this.listenerUserType">
+                        <option value="" disabled selected>Tipo do usuário</option>
+                        <option value="CHAMPIONSHIPADMINISTRATOR">Administrador de Campeonatos</option>
+                        <option value="HOUSEMANAGER">Administrador da Casa</option>
+                        <option value="BETTOR">Apostador</option>
+                        <option value="TEAM">Equipe</option>
+                    </select>
                 </v-card>
-            <Message :infoMessage="this.infoMessage" v-if="this.showMessage" @closeMessageDialog="this.showMessage = false" />
+                <br>
+                <v-card>
+                    <select style="display: none;" name="userUF" id="userUF" v-model="this.user.uf">
+                        <option value='' disabled selected>Estado de Administração</option>
+                        <option value="PR">PR</option>
+                        <option value="SP">SP</option>
+                        <option value="SC">SC</option>
+                        <option value="RS">RS</option>
+                        <option value="MS">MS</option>
+                        <option value="RO">RO</option>
+                        <option value="AC">AC</option>
+                        <option value="AM">AM</option>
+                        <option value="RR">RR</option>
+                        <option value="PA">AP</option>
+                        <option value="TO">TO</option>
+                        <option value="MA">MA</option>
+                        <option value="RN">RN</option>
+                        <option value="PB">PB</option>
+                        <option value="PE">PE</option>
+                        <option value="AL">AL</option>
+                        <option value="SE">SE</option>
+                        <option value="BA">BA</option>
+                        <option value="MG">MG</option>
+                        <option value="RJ">RJ</option>
+                        <option value="MT">RJ</option>
+                        <option value="GO">GO</option>
+                        <option value="DF">DF</option>
+                        <option value="PI">PI</option>
+                        <option value="CE">CE</option>
+                        <option value="ES">ES</option>
+                    </select>
+                </v-card>
+
+                <br>
+                <v-card class="d-flex flex-row-reverse" variant="flat">
+                    <v-btn color="success" variant="text" @click="this.updateUser">Salvar alterações</v-btn>
+                    <v-btn color="error" variant="text" @click="this.deleteUser">Deletar</v-btn>
+                    <v-btn variant="text" color="warning"
+                        @click="$emit('closeEdit')"><v-icon>mdi-keyboard-return</v-icon></v-btn>
+                </v-card>
+            </v-card>
+            <Message :infoMessage="this.infoMessage" v-if="this.showMessage"
+                @closeMessageDialog="this.showMessage = false" />
         </v-sheet>
     </v-dialog>
 </template>
@@ -74,10 +75,19 @@
 <script>
 import Message from '@/components/dialogs/Message.vue'
 import { mask } from 'vue-the-mask'
+import { ref, inject } from 'vue'
 
 export default {
     components: { Message },
     props: ['userToEdit'],
+
+    setup() {
+        const userStore = inject('userStore')
+        return{
+            userStore
+        }
+
+    },
     data() {
         return {
             user: {
@@ -121,6 +131,8 @@ export default {
                     this.showMessage = true;
                     setTimeout(() => {
                         this.$emit('closeEdit')
+                        //realiza a atualização da tabela de equipes para manter o sincronismo
+                        this.userStore.methods.getTeams();
                     }, 1000);
 
                 } else {
@@ -145,6 +157,7 @@ export default {
                     setTimeout(() => {
                         this.$emit('closeEdit')
                         this.$emit('editClosed')
+                        this.userStore.methods.getTeams();
                     }, 1000);
 
 

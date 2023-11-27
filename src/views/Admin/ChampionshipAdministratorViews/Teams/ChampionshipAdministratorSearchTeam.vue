@@ -1,31 +1,35 @@
 <template>
     <v-container class="h-100 d-flex flex-column">
-        <v-card variant="tonal" color="deep-purple-darken-1" class="rounded-x" width="100%">
+        <v-card variant="tonal" color="light-blue-darken-2" class="rounded-x" width="100%">
             <v-card-subtitle>
                 <h3>Filtros</h3>
             </v-card-subtitle>
-            <v-card class="pa-2">
-                <v-row>
-                    <v-col>
-                        <v-text-field theme="dark" clearable variant="solo-filled" name="name"
-                            label="Nome do Usuário/Equipe" id="teamName" v-model="name"></v-text-field>
+            <v-card card class="pa-2">
+                <v-form ref="form">
+                    <v-row>
+                        <v-col>
+                            <v-text-field theme="dark" clearable variant="solo-filled" name="name"
+                                label="Nome do Usuário/Equipe" id="teamName" v-model="name"></v-text-field>
 
-                        <v-text-field class="w-100" theme="dark" clearable variant="solo-filled" name="phone"
-                            label="Telefone" id="phone" v-model="phone" v-mask="['(##)#####-####']"></v-text-field>
+                            <v-text-field class="w-100" theme="dark" clearable variant="solo-filled" name="phone"
+                                label="Telefone" id="phone" v-model="phone" v-mask="['(##)#####-####']"></v-text-field>
 
-                        <v-select clearable label='Estado'
-                            :items="['PR', 'SP', 'SC', 'RS', 'MS', 'RO', 'AC', 'AM', 'RR', 'PA', 'TO', 'MA', 'RN', 'PB', 'PE', 'AL', 'SE', 'BA', 'MG', 'RJ', 'MT', 'GO', 'DF', 'PI', 'CE', 'ES']"
-                            variant='solo-filled' v-model="uf"></v-select>
-                    </v-col>
-                    <v-col>
-                        <v-text-field theme="dark" clearable variant="solo-filled" name="name" label="E-mail" id="email"
-                            v-model="email"></v-text-field>
+                            <v-select clearable label='Estado'
+                                :items="['PR', 'SP', 'SC', 'RS', 'MS', 'RO', 'AC', 'AM', 'RR', 'PA', 'TO', 'MA', 'RN', 'PB', 'PE', 'AL', 'SE', 'BA', 'MG', 'RJ', 'MT', 'GO', 'DF', 'PI', 'CE', 'ES']"
+                                variant='solo-filled' v-model="uf"></v-select>
+                        </v-col>
+                        <v-col>
+                            <v-text-field theme="dark" clearable variant="solo-filled" name="email" label="E-mail" id="email"
+                                v-model="email"></v-text-field>
 
-                        <v-text-field theme="dark" clearable variant="solo-filled" name="name" label="CPF" id="cpf"
-                            v-model="document" v-mask="['###.###.###-##']"></v-text-field>
+                            <v-text-field theme="dark" clearable variant="solo-filled" name="cpf" label="CPF" id="cpf"
+                                v-model="document" v-mask="['###.###.###-##']"></v-text-field>
 
-                    </v-col>
-                </v-row>
+                        </v-col>
+
+                    </v-row>
+                </v-form>
+
 
             </v-card>
             <v-card-actions class="d-flex flex-column">
@@ -134,19 +138,24 @@ export default {
                     method: 'GET',
                     headers: { 'Content-type': 'application/json' },
                 }).then(res => {
-                    if(res.status === 200){
-                        res.json().then(data =>{
+                    if (res.status === 200) {
+                        res.json().then(data => {
                             this.teams = data;
+                            this.reset()
                         })
-                    }else{
+                    } else {
                         this.infoMessage = 'Sua pesquisa com esses filtros não retornou resultados'
                         this.showMessage = true;
                         this.teams = null;
+                        this.reset()
+
                     }
                 }).catch(res => {
                     this.infoMessage = 'Erro ao realizar busca, tente novamente mais tarde'
                     this.showMessage = true;
                     this.teams = null;
+                    this.reset()
+
                 })
             }
 
@@ -159,10 +168,13 @@ export default {
             this.showRegisterDialog = false;
             this.teams = [];
         },
-        closeEditDialogMethod(){
+        closeEditDialogMethod() {
             this.showEditDialog = false;
             this.teams = [];
-        }
+        },
+        reset() {
+            this.$refs.form.reset()
+        },
     },
     directives: {
         mask

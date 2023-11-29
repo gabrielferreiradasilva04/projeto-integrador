@@ -4,7 +4,7 @@
             <v-card-subtitle>
                 <h3>Filtros</h3>
             </v-card-subtitle>
-            <v-card card class="pa-2">
+            <v-card  card class="pa-2">
                 <v-form ref="form">
                     <v-row>
                         <v-col>
@@ -62,7 +62,7 @@
                             <td>{{ team.email }}</td>
                             <td>{{ team.phone }}</td>
                             <td>
-                                <v-btn variant="text" color="warning" @click="this.edit(team)">Editar</v-btn>
+                                <v-btn variant="text" color="warning" @click="this.edit(team)"><v-icon>mdi-pencil</v-icon></v-btn>
                             </td>
                         </tr>
                     </tbody>

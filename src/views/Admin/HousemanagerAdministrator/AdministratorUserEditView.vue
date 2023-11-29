@@ -83,7 +83,7 @@ export default {
 
     setup() {
         const userStore = inject('userStore')
-        return{
+        return {
             userStore
         }
 
@@ -129,10 +129,11 @@ export default {
                 if (res.status === 200) {
                     this.infoMessage = 'Atualizado com sucesso!'
                     this.showMessage = true;
+                    //realiza a atualização da tabela de equipes para manter o sincronismo
+                    this.userStore.methods.getTeams();
                     setTimeout(() => {
                         this.$emit('closeEdit')
-                        //realiza a atualização da tabela de equipes para manter o sincronismo
-                        this.userStore.methods.getTeams();
+
                     }, 1000);
 
                 } else {
@@ -153,11 +154,11 @@ export default {
                 if (res.status === 200) {
                     this.infoMessage = 'Usuário deletado'
                     this.showMessage = true;
-
+                    this.userStore.methods.getTeams();
                     setTimeout(() => {
                         this.$emit('closeEdit')
                         this.$emit('editClosed')
-                        this.userStore.methods.getTeams();
+
                     }, 1000);
 
 

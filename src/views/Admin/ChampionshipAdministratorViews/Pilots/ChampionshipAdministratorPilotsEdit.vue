@@ -104,7 +104,7 @@ export default {
                     this.infoMessage = 'Alterações salvas com sucesso';
                     this.showMessage = true;
                     setTimeout(() => {
-                        this.userStore.getPilots();
+                        this.userStore.methods.getPilots();
                         this.$emit('closeEditDialog')
                     }, 1000);
 
@@ -129,7 +129,7 @@ export default {
                     this.infoMessage = 'Piloto deletado com sucesso!'
                     this.showMessage = true;
                     setTimeout(() => {
-                        this.userStore.getPilots();
+                        this.userStore.methods.getPilots();
                         this.$emit('closeEditDialog')
                     }, 1000);
                 } else {
@@ -143,7 +143,8 @@ export default {
         },
         reset() {
             this.$refs.form.reset()
-        }
+        },
+
     },
     beforeMount() {
         this.pilot = this.pilotToEdit;

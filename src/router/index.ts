@@ -46,14 +46,8 @@ export const routes = [
     path: '/championship-administrator-register',
     component: () => import('../views/Admin/ChampionshipAdministratorViews/TeamManagementView.vue'),
   },
-  {
-    path: '/championship-administrator-championships',
-    component: () => import('../views/Admin/ChampionshipAdministratorViews/Championships/ChampionshipAdministratorChampionshipsView.vue'),
-  },
-  {
-    path: '/championship-administrator-championships-add',
-    component: () => import('../views/Admin/ChampionshipAdministratorViews/Championships/ChampionshipAdministratorAddChampionship.vue'),
-  },
+  
+
   {
     path: '/championship-administrator-home',
     component: () => import('@/components/Menus/ChampionshipAdminMenu.vue'),

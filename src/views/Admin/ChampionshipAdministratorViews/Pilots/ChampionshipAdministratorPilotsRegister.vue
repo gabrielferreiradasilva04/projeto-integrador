@@ -20,7 +20,7 @@
                         :items="['PR', 'SP', 'SC', 'RS', 'MS', 'RO', 'AC', 'AM', 'RR', 'PA', 'TO', 'MA', 'RN', 'PB', 'PE', 'AL', 'SE', 'BA', 'MG', 'RJ', 'MT', 'GO', 'DF', 'PI', 'CE', 'ES']">
                     </v-select>
                     <v-select return-object variant="solo-filled" label="Equipe do piloto" v-model="this.pilot.team"
-                        clearable="" :items="this.teams" item-title="name">
+                        clearable="" :items="this.pilotStore.state.teamsList" item-title="name">
                     </v-select>
                     <v-card-item class="d-flex flex-row-reverse">
                         <v-btn variant="text" color="warning"
@@ -47,9 +47,17 @@
 <script>
 import Message from '@/components/dialogs/Message.vue';
 import { mask } from 'vue-the-mask'
+import {inject} from 'vue'
 
 
 export default {
+    setup(){
+        const pilotStore = inject('userStore')
+        
+        return{
+            pilotStore
+        }
+    },
     components: { Message },
     data() {
         return {
@@ -64,24 +72,12 @@ export default {
                 team: null,
                 uf: null
             },
-            teams: [],
             showMessage: false,
             infoMessage: '',
             dialog: true,
         }
     },
     methods: {
-        async getTeams() {
-            await fetch('http://localhost:8081/teams', {
-                method: 'GET',
-                headers: { 'Content-type': 'application/json' },
-            }).then(res => res.json().then(data => {
-                this.teams = data;
-            })).catch(res => {
-                this.infoMessage = 'Erro ao carregar equipes'
-                this.showMessage = true;
-            })
-        },
         async validate() {
 
             const { valid } = await this.$refs.form.validate()
@@ -115,6 +111,7 @@ export default {
                         res.json().then(data => {
                             this.infoMessage = 'Cadastro realizado com sucesso!';
                             this.showMessage = true;
+                            this.pilotStore.methods.getPilots();
                             setTimeout(() => {
                                 this.$emit('closeRegisterDialog');
                             }, 1000);
@@ -138,9 +135,7 @@ export default {
 
 
     },
-    beforeMount() {
-        this.getTeams();
-    },
+
     directives: {
         mask
     }

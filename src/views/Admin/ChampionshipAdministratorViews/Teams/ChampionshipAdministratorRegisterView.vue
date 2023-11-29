@@ -127,10 +127,10 @@ export default {
                         if (res.status === 201) {
                             this.dialogMessageModal = true;
                             this.dialogMessage = "Cadastro realizado com  sucesso"
+                            this.userStore.methods.getTeams();
                             setTimeout(() => {
                                 this.reset()
                                 this.$emit('closeRegisterDialog')
-                                this.userStore.methods.getTeams();
                             }, 1000);
 
                         }

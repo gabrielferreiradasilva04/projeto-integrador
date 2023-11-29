@@ -143,13 +143,15 @@ export default {
                 uf: this.teamEdit.uf
             }
             pilot.team = teamToSearch;
-            console.log(pilot)
             await fetch('http://localhost:8081/Pilot/' + pilot.id, {
                 method: 'PUT',
                 headers: { 'Content-type': 'application/json' },
                 body: JSON.stringify(pilot)
             }).then(res => {
                 if (res.status === 200) {
+                    this.userStore.methods.getTeams();
+                    this.userStore.methods.getPilots();
+
 
                 }
             })
@@ -162,7 +164,8 @@ export default {
                 body: JSON.stringify(pilot)
             }).then(res => {
                 if (res.status === 200) {
-                    this.getTeamPilots();
+                    this.userStore.methods.getTeams();
+                    this.userStore.methods.getPilots();
                 }
             })
         },
@@ -171,22 +174,21 @@ export default {
                 console.log(this.putPilot(pilots.at(i)))
             }
             this.editTeam();
-            this.userStore.methods.getTeams();
             this.infoMessage = 'Alterações salvas com sucesso!'
             this.showMessage = true;
-            setTimeout(() => {
+            this.userStore.methods.getTeams();
+            this.userStore.methods.getPilots(); setTimeout(() => {
                 this.$emit('closeEditDialog')
             }, 1000);
 
         },
         async editTeam() {
             await fetch('http://localhost:8081/User/' + this.teamEdit.id, {
-
                 method: 'PUT',
                 headers: { 'Content-type': 'application/json' },
                 body: JSON.stringify(this.teamEdit)
-            }).then(res =>{
-                if(res.status === 200){
+            }).then(res => {
+                if (res.status === 200) {
                     console.log('ok')
                 }
             })
@@ -200,9 +202,9 @@ export default {
                 if (res.status === 200) {
                     this.infoMessage = 'Equipe Deletada'
                     this.showMessage = true;
-                    setTimeout(() => {
+                    this.userStore.methods.getTeams();
+                    this.userStore.methods.getPilots();                    setTimeout(() => {
                         this.$emit('closeEditDialog')
-                        this.userStore.methods.getTeams();
                     }, 1000);
 
 
@@ -218,8 +220,8 @@ export default {
         }
     },
     reset() {
-            this.$refs.form.reset()
-        },
+        this.$refs.form.reset()
+    },
 
     beforeMount() {
         this.teamEdit = this.team;

@@ -33,7 +33,7 @@
                 <ChampionshipAdministratorSearchTeamVue />
             </v-window-item>
             <v-window-item value="option-2">
-
+                <ChampionshipSearchView />
             </v-window-item>
             <v-window-item value="option-3">
                 <ChampionshipAdministratorCarSearch />
@@ -50,9 +50,13 @@ import ChampionshipAdministratorRegisterViewVue from '@/views/Admin/Championship
 import ChampionshipAdministratorSearchTeamVue from '@/views/Admin/ChampionshipAdministratorViews/Teams/ChampionshipAdministratorSearchTeam.vue'
 import ChampionshipAdministratorCarSearch from '@/views/Admin/ChampionshipAdministratorViews/Cars/ChampionshipAdministratorCarSearch.vue'
 import ChampionshipAdministratorPilotsSearchVue from '@/views/Admin/ChampionshipAdministratorViews/Pilots/ChampionshipAdministratorPilotsSearch.vue'
+import ChampionshipSearchView from '@/views/Admin/ChampionshipAdministratorViews/Championships/ChampionshipSearchView.vue'
 
 export default {
-    components: { ChampionshipAdministratorRegisterViewVue, ChampionshipAdministratorSearchTeamVue, ChampionshipAdministratorCarSearch, ChampionshipAdministratorPilotsSearchVue},
+    components: {
+        ChampionshipAdministratorRegisterViewVue, ChampionshipAdministratorSearchTeamVue, ChampionshipAdministratorCarSearch, ChampionshipAdministratorPilotsSearchVue,
+        ChampionshipSearchView
+    },
     data() {
         return {
             tab: 'option-1'

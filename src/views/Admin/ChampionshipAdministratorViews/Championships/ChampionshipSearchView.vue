@@ -6,26 +6,17 @@
                     Filtros
                 </h3>
             </v-card-subtitle>
-            <v-card class="d-flex flex-column pa-2">
-                <v-form ref="form">
-                    <v-row>
-                        <v-col>
-                            <v-text-field name="title" label="Titulo do Campeonato" id="title" v-model="this.title"
-                                variant="solo-filled"></v-text-field>
-
-                            <v-date-picker v-model="value" :active="true" :landscape="true" :reactive="true">Selecione uma
-                                data</v-date-picker>
-                        </v-col>
-                        <v-col>
-
-                        </v-col>
-                    </v-row>
-                </v-form>
-
-            </v-card>
         </v-card>
-        <v-data-table v-model:items="this.items" item-value="name" :headers="this.headers">
-        </v-data-table>
+        <v-card>
+            <v-data-table v-model:items="this.items" item-value="name" :headers="this.headers">
+                    <template v-slot:[`bottom`]>
+                        <div class="text-center pt-2">
+                            <v-pagination v-model="page" :length="pageCount"></v-pagination>
+                        </div>
+                    </template>
+            </v-data-table>
+        </v-card>
+
     </v-container>
 </template>
 <script>

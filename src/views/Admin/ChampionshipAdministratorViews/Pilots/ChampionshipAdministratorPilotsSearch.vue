@@ -7,7 +7,7 @@
             <v-card  class="pa-2">
                 <v-text-field v-model="search" label="Search" prepend-inner-icon="mdi-magnify" single-line
                     variant="outlined" hide-details></v-text-field>
-                <v-data-table v-model:items="this.userStore.state.pilotsList" :headers="this.headers" :search="this.search">
+                <v-data-table v-model:items="this.userStore.state.pilotsList" :headers="this.headers" :search="this.search" >
                     <template v-slot:[`item.actions`]="{ item }">
                         <v-btn variant="text" color="warning" @click="this.edit(item)"><v-icon>mdi-pencil</v-icon></v-btn>
                     </template>

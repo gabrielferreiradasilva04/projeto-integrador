@@ -7,7 +7,8 @@ const state = reactive({
     teamsList: [],
     carsList: [],
     pilotsList: [],
-    preparersList: []
+    preparersList: [],
+    championshipsList: []
 
 })
 
@@ -81,6 +82,20 @@ const methods = {
             }
         }).catch(res => {
             console.log('Erro ao carregar Preparadores')
+        })
+    },
+    async getChampionships() {
+        await fetch(url + 'Championship', {
+            method: 'GET',
+            headers: { 'Content-type': 'application/json' },
+        }).then(res => {
+            if (res.status === 200) {
+                res.json().then(data => {
+                    state.championshipsList = data;
+                })
+            }
+        }).catch(res => {
+            console.log('Erro ao carregar campeonatos')
         })
     }
 

@@ -1,5 +1,5 @@
 <template>
-    <v-container class="h-100 d-flex flex-column">
+    <v-container class="h-100 d-flex flex-column" >
         <v-card variant="tonal" color="light-blue-darken-2" class="rounded-x" width="100%">
             <v-card-subtitle>
                 <h3>Filtros</h3>

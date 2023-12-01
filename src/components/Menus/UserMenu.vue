@@ -20,8 +20,9 @@
                 </v-icon>
                 Meu Extrato </v-tab>
         </v-tabs>
-        <v-window v-model="tab" continuous class="w-100 border rounded-xl elevation-24">
+        <v-window v-model="tab" continuous class="w-100 rounded-xl">
             <v-window-item value="option-1">
+                <UserHome />
             </v-window-item>
             <v-window-item value="option-2">
                 <ChampionshipsViewVue />
@@ -36,12 +37,10 @@
 
 <script>
 import ChampionshipsViewVue from '@/views/Users/ChampionshipsView.vue'
-
+import UserHome from '@/views/Users/UserHome.vue'
 
 export default {
-    components: {
-        ChampionshipsViewVue
-    },
+    components: {ChampionshipsViewVue, UserHome},
     data() {
         return {
             tab: 'option-1'

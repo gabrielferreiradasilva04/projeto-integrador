@@ -20,7 +20,7 @@
                     Option 3
                 </v-tab>
             </v-tabs>
-            <v-window v-model="tab" continuous class="w-100 border rounded-xl elevation-24">
+            <v-window v-model="tab" continuous class="w-100  ">
                 <v-window-item value="option-1" >
                         <AdministratorUserSearchViewVue />
                 </v-window-item>

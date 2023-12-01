@@ -1,6 +1,6 @@
 <template>
     <v-card  theme="dark" class="d-flex flex-row" height="100%" width="100%" variant="text">
-            <v-tabs v-model="tab" direction="vertical" color="primary" class="w-auto h-100">
+            <v-tabs v-model="tab" direction="vertical" color="blue" class="w-auto h-100">
                 <v-tab value="option-1">
                     <v-icon start size="x-large">
                         mdi-account-group

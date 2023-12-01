@@ -1,7 +1,7 @@
 <template>
     <v-container >
-        <v-card color="blue-darken-4">
-            <v-card-title primary-title class="text-center">
+        <v-card color="blue-darken-4" class="rounded-pill">
+            <v-card-title primary-title class="text-center ">
                 <h1>Seja Bem Vindo ao Incrível Mundo das Arrancadas!</h1>
             </v-card-title>
         </v-card>
@@ -13,13 +13,14 @@
         <br>
         <br>
         <v-divider></v-divider>
-        <v-card>
+        <br>
+        <v-card color="blue-darken-4" class="rounded-xl">
             <v-card-title primary-title>
                 <h2>Suas Estatísticas</h2>
             </v-card-title>
             <v-card-text>
                 <v-data-table v-model:items="this.table" :headers="this.headers" items-per-page-text="Linhas por página" :hover="true"
-                    :hide-no-data="true">
+                    :hide-no-data="true" class="rounded-xl">
                 </v-data-table>
             </v-card-text>
         </v-card>

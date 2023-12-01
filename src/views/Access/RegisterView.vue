@@ -1,47 +1,46 @@
 
 <template>
-    <v-container class="pa-6 text-center ">
+    <v-container grid-list-xs>
+        
+    </v-container>
+    <v-card class="text-center">
         <h1>Cadastre-se</h1>
-        <v-sheet width="300" class="mx-auto">
+    </v-card>
+    <v-card>
+        <v-form ref="form">
+            <v-text-field v-model="user.name" :rules="nameRules" label="Nome completo" required></v-text-field>
 
-            <v-form ref="form">
-                <v-text-field v-model="user.name" :rules="nameRules" label="Nome completo" required></v-text-field>
+            <v-text-field v-model="user.document" :rules="nameRules" label="CPF" v-mask="['###.###.###-##']"
+                required></v-text-field>
 
-                <v-text-field v-model="user.document" :rules="nameRules" label="CPF" v-mask="['###.###.###-##']"
-                    required></v-text-field>
+            <v-text-field v-model="user.email" :rules="nameRules" label="E-mail para contato" required></v-text-field>
 
-                <v-text-field v-model="user.email" :rules="nameRules" label="E-mail para contato" required></v-text-field>
+            <v-text-field v-model="user.password" :counter="8" :rules="nameRules" label="Defina uma senha de acesso"
+                required :type="'' ? 'text' : 'password'"></v-text-field>
 
-                <v-text-field v-model="user.password" :counter="8" :rules="nameRules" label="Defina uma senha de acesso"
-                    required :type="'' ? 'text' : 'password'"></v-text-field>
+            <v-text-field v-model="confirmPassword" :counter="8" :rules="nameRules" label="Confirme a senha de acesso"
+                required :type="'' ? 'text' : 'password'"></v-text-field>
 
-                <v-text-field v-model="confirmPassword" :counter="8" :rules="nameRules" label="Confirme a senha de acesso"
-                    required :type="'' ? 'text' : 'password'"></v-text-field>
+            <v-text-field v-model="user.phone" :rules="nameRules" label="Telfone para contato" v-mask="['(##)#####-####']"
+                required></v-text-field>
 
-                <v-text-field v-model="user.phone" :rules="nameRules" label="Telfone para contato"
-                    v-mask="['(##)#####-####']" required></v-text-field>
-
-                <v-checkbox v-model="checkbox" :rules="[v => !!v || 'Você precisa concordar para continuar']"
-                    label="Li e aceito os termos de uso" required @click="this.termsDialog = true"></v-checkbox>
-
-                <div class="d-flex flex-column">
-                    <v-btn color="success" class="mt-4" block @click="validate">
-                        Validate
-                    </v-btn>
-
-                    <v-btn color="success" class="mt-4" block to="/">
-                        Já possuo uma conta!
-                    </v-btn>
-
-                </div>
-            </v-form>
-        </v-sheet>
+            <v-checkbox v-model="checkbox" :rules="[v => !!v || 'Você precisa concordar para continuar']"
+                label="Li e aceito os termos de uso" required @click="this.termsDialog = true"></v-checkbox>
+        </v-form>
+        <v-card-actions class="d-flex flex-row">
+            <v-btn color="success" class="mt-4" block @click="validate">
+                Registrar-se
+            </v-btn>
+            <v-btn color="success" class="mt-4" block to="/">
+                Já possuo uma conta!
+            </v-btn>
+        </v-card-actions>
         <!--Componente de notificação-->
         <Message :infoMessage="this.dialogMessage" v-if="dialogMessageModal"
             @closeMessageDialog="this.dialogMessageModal = false" />
         <!--Componente termos-->
         <Terms @closeTermsDialog="this.termsDialog = false" v-if="termsDialog" />
-    </v-container>
+    </v-card>
 </template>
   
 <script>
@@ -97,7 +96,7 @@ export default {
                         body: userJson
 
                     }).then((res => {
-                        
+
                         if (res.status === 201) {
                             this.dialogMessageModal = true;
                             this.dialogMessage = "Parabéns! Cadastro realizado com sucesso"

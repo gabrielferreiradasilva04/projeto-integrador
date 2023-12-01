@@ -3,12 +3,11 @@
     <v-layout>
       <v-app-bar color="indigo-darken-4" v-if="notIsLoginOrRegister()">
         <template v-slot:prepend>
-          <v-app-bar-nav-icon></v-app-bar-nav-icon>
+          <v-btn size="x-large" icon="mdi-car-traction-control"></v-btn>
         </template>
         <template v-slot:append>
-          <v-btn icon="mdi-dots-vertical"></v-btn>
         </template>
-        <v-app-bar-title>Gerenciar Casa</v-app-bar-title>
+        <v-app-bar-title>Arranque Forte Bet</v-app-bar-title>
       </v-app-bar>
       <v-main>
         <v-container fluid>

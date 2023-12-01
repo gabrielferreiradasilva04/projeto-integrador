@@ -29,6 +29,7 @@ import { VDataTable } from 'vuetify/lib/labs/components.mjs'
 import { inject } from 'vue'
 
 import ChampionshipRegisterVue from './ChampionshipRegister.vue'
+
 export default {
     components: { VDataTable, ChampionshipRegisterVue },
     setup() {
@@ -64,7 +65,7 @@ export default {
                 },
                 {
                     title: 'Status',
-                    key: 'championshipStatus'
+                    key: 'status.description'
                 },
                 {
                     title: 'Ações',

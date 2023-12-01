@@ -58,7 +58,7 @@ export default {
               }
               if (data.user.userType === "BETTOR") {
                 setTimeout(() => {
-                  this.$router.push('/administrator-home')
+                  this.$router.push('/user-home')
                 }, 1000);
               }
               if(data.user.userType === "CHAMPIONSHIPADMINISTRATOR"){

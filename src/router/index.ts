@@ -38,10 +38,7 @@ export const routes = [
     path: '/error-page',
     component: () => import('../views/Errors/DefaultErrorPage.vue'),
   },
-  {
-    path: '/user-home',
-    component: () => import('../views/Users/UsersHome.vue'),
-  },
+
   {
     path: '/championship-administrator-register',
     component: () => import('../views/Admin/ChampionshipAdministratorViews/TeamManagementView.vue'),
@@ -56,6 +53,10 @@ export const routes = [
   {
     path: '/appbar',
     component: () => import('@/components/dashBoard/MainBarView.vue'),
+  },
+  {
+    path: '/user-home',
+    component: () => import('@/components/Menus/UserMenu.vue'),
   },
   
   

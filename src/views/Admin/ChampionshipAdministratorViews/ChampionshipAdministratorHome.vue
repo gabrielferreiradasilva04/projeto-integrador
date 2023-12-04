@@ -36,6 +36,7 @@ export default {
                 if (res.status === 200) {
                     res.json().then(data => {
                         this.user = data;
+                        console.log(this.user)
                     })
                 }
                 if(res.status === 404){

@@ -2,47 +2,37 @@
 <template>
     <v-container class="d-flex flex-column align-center">
         <v-sheet class="w-50">
-            <v-card class="text-center rounded-xl elevation-24" color="blue-darken-4">
-                <h1>Cadastre-se</h1>
+            <v-card class="text-center rounded-xl elevation-10" color="blue-darken-4">
+                <h1>Seus Dados</h1>
             </v-card>
             <br>
-            <v-card-text>
-                Solicitamos apenas os dados essenciais para que seja proporcionada a melhor experiência para você!
-            </v-card-text>
             <v-divider>
             </v-divider>
             <br>
-            <v-card class="elevation-24 rounded-xl pa-5" variant="plain">
+            <v-card class=" rounded-xl pa-5" variant="plain">
                 <v-form ref="form">
-                    <v-text-field variant="outlined" v-model="user.name" :rules="nameRules" label="Nome completo"
-                        required></v-text-field>
+                    <v-text-field variant="outlined" v-model="store.state.user.name" :rules="nameRules" label="Nome completo"
+                        required readonly></v-text-field>
 
-                    <v-text-field variant="outlined" v-model="user.document" :rules="nameRules" label="CPF"
+                    <v-text-field variant="outlined" v-model="store.state.user.document" :rules="nameRules" label="CPF" readonly
                         v-mask="['###.###.###-##']" required></v-text-field>
 
-                    <v-text-field variant="outlined" v-model="user.email" :rules="nameRules" label="E-mail para contato"
+                    <v-text-field variant="outlined" v-model="store.state.user.email"  readonly :rules="nameRules" label="E-mail para contato"
                         required></v-text-field>
 
-                    <v-text-field variant="outlined" v-model="user.password" :counter="8" :rules="nameRules"
-                        label="Defina uma senha de acesso" required :type="'' ? 'text' : 'password'"></v-text-field>
+                    <v-text-field variant="outlined" v-model="store.state.user.password" :counter="8" :rules="nameRules"
+                        label="Senha de acesso" readonly required :type="'' ? 'text' : 'password'"></v-text-field>
 
-                    <v-text-field variant="outlined" v-model="confirmPassword" :counter="8" :rules="nameRules"
-                        label="Confirme a senha de acesso" required :type="'' ? 'text' : 'password'"></v-text-field>
 
-                    <v-text-field variant="outlined" v-model="user.phone" :rules="nameRules" label="Telfone para contato"
+                    <v-text-field variant="outlined" v-model="store.state.user.phone" :rules="nameRules" label="Telfone para contato" readonly
                         v-mask="['(##)#####-####']" required></v-text-field>
 
-                    <v-checkbox v-model="checkbox" :rules="[v => !!v || 'Você precisa concordar para continuar']"
-                        label="Li e aceito os termos de uso" required @click="this.termsDialog = true"></v-checkbox>
                 </v-form>
             </v-card>
             <br>
-            <v-card class="pa-2 d-flex flex-column rounded-xl elevation-24">
+            <v-card class="pa-2 d-flex flex-column rounded-xl">
                 <v-btn color="success" variant="outlined" class="mt-4 rounded-pill"  @click="validate">
-                    Registrar-se
-                </v-btn>
-                <v-btn color="blue-darken-4" variant="outlined"  class="mt-4 rounded-pill" to="/">
-                    Já possuo uma conta!
+                    Salvar Alterações
                 </v-btn>
             </v-card>
             <!--Componente de notificação-->
@@ -59,32 +49,28 @@
 import { mask } from 'vue-the-mask'
 import Message from '@/components/dialogs/Message.vue';
 import Terms from '@/components/dialogs/Terms.vue';
+import {inject} from 'vue'
 
 
 export default {
 
+    setup(){
+        const store = inject('userStore');
+        store.methods.getCurrentUser();
+        return{
+            store
+        }
+    },
     data: () => ({
         nameRules: [
             v => !!v || 'Campo obrigatório',
         ],
-
         select: null,
-        checkbox: false,
         //usuario
-        user: {
-            name: null,
-            document: null,
-            email: null,
-            password: null,
-            phone: null,
-            userType: 2,
-        },
         confirmPassword: null,
         //Dialogs
         dialogMessage: null,
         dialogMessageModal: false,
-        termsDialog: false
-
     }),
 
     methods: {

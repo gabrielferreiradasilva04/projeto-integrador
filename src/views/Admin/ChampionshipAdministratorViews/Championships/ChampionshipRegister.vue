@@ -49,19 +49,14 @@
                         </v-row>
                         <v-row>
                             <v-col>
-                                <v-select :items="['tipo de campeonato1', 'tipo 2']" v-model="championship.championshipType"
+                                <v-select :items="this.store.state.championshipTypes" v-model="championship.championshipType" item-title="description"
                                     label="Tipo de campeonato" variant="solo-filled" return-object></v-select>
-                            </v-col>
-                            <v-col>
-                                <v-select :items="['tipo de campeonato1', 'tipo 2']" v-model="championship.championshipType"
-                                    label="Tipo de campeonato" return-object variant="solo-filled"></v-select>
                             </v-col>
                         </v-row>
                         <v-row>
                             <v-col>
-
-                                <v-select :items="['local1', 'local2']" v-model="championship.championshipType"
-                                    label="Local do Campeonato" return-object variant="solo-filled"></v-select>
+                                <v-select :items="this.store.state.placesList" v-model="championship.place"
+                                    label="Local do Campeonato" return-object variant="solo-filled" item-title="name"></v-select>
                             </v-col>
                             <v-col class="pa-5">
                                 <v-btn color="success" variant="tonal" class="rounded-xl"><v-icon>mdi-plus</v-icon></v-btn>
@@ -127,9 +122,19 @@
 
 <script>
 import { VDataTable } from 'vuetify/lib/labs/components.mjs'
-
+import { inject } from 'vue'
 export default {
     components: { VDataTable },
+    setup() {
+        const store = inject('userStore')
+        store.methods.getCars();
+        store.methods.getPilots();
+        store.methods.getPlaces();
+        store.methods.getChampionshipTypes()
+        return {
+            store
+        }
+    },
     data() {
         return {
             dialog: true,
@@ -142,7 +147,7 @@ export default {
                 startDate: null,
                 endDate: null,
                 championshipType: null,
-                local: null,
+                place: null,
                 carsList: [],
                 clashsList: []
             },

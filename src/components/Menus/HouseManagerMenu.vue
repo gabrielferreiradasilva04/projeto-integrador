@@ -13,12 +13,6 @@
                     </v-icon>
                     Financeiro
                 </v-tab>
-                <v-tab value="option-3">
-                    <v-icon start size="x-large">
-                        mdi-access-point
-                    </v-icon>
-                    Option 3
-                </v-tab>
             </v-tabs>
             <v-window v-model="tab" continuous class="w-100  ">
                 <v-window-item value="option-1" >

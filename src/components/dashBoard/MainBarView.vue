@@ -16,7 +16,7 @@
       </v-main>
     </v-layout>
   </v-card>
-  <FooterVue v-if="notIsLoginOrRegister()" />
+  <FooterVue  />
 </template>
 <script>
 import HouseManagerMenu from "@/components/Menus/HouseManagerMenu.vue";

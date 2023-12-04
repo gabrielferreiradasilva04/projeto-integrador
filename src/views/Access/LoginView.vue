@@ -1,15 +1,30 @@
 <template>
-  <v-container class="pa-6 text-center">
-    <h1>Login</h1>
-    <v-sheet width="300" class="mx-auto">
-      <v-form fast-fail @submit.prevent>
-        <v-text-field v-model="user.email" label="E-mail"></v-text-field>
+  <v-container class="d-flex flex-column align-center">
+    <v-sheet class="w-50">
+      <v-card class="text-center rounded-pill elevation-12" color="blue-darken-4">
+        <h1>Acessar sua conta</h1>
+      </v-card>
+      <br>
+      <v-card-text>
+        Forneça os dados solicitados para acesso.
+      </v-card-text>
+      <br>
+      <v-divider></v-divider>
+      <br>
+      <v-card class="elevation-24 rounded-xl pa-5" variant="plain">
+        <v-form fast-fail @submit.prevent>
+          <v-text-field v-model="user.email" label="E-mail" variant="outlined"></v-text-field>
 
-        <v-text-field :type="'' ? 'text' : 'password'" v-model="user.password" label="Senha de acesso"></v-text-field>
+          <v-text-field :type="'' ? 'text' : 'password'" v-model="user.password" label="Senha de acesso"
+            variant="outlined"></v-text-field>
 
-        <v-btn type="submit" color="success" block class="mt-2" @click="login">Entrar</v-btn>
-        <v-btn type="button" color="success" block class="mt-2" to="/register">Cadastre-se</v-btn>
-      </v-form>
+        </v-form>
+        <v-card-actions>
+          <v-btn variant="outlined" type="submit" color="success" class="mt-2 rounded-pill" @click="login">Entrar</v-btn>
+          <v-btn variant="outlined" type="button" color="blue-darken-4" class="mt-2 rounded-pill" to="/register">Cadastre-se</v-btn>
+        </v-card-actions>
+      </v-card>
+
     </v-sheet>
   </v-container>
   <!--Componente de mensagem-->
@@ -61,7 +76,7 @@ export default {
                   this.$router.push('/user-home')
                 }, 1000);
               }
-              if(data.user.userType === "CHAMPIONSHIPADMINISTRATOR"){
+              if (data.user.userType === "CHAMPIONSHIPADMINISTRATOR") {
                 setTimeout(() => {
                   this.$router.push('/championship-administrator-home')
                 }, 1000);

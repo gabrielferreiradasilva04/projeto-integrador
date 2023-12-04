@@ -18,7 +18,7 @@
                 <v-icon start size="x-large">
                     mdi-cash
                 </v-icon>
-                Meu Extrato </v-tab>
+                Minha Carteira </v-tab>
             <v-tab value="option-4">
                 <v-icon start size="x-large">
                     <v-icon>mdi-account</v-icon>
@@ -34,9 +34,10 @@
                 <ChampionshipsViewVue />
             </v-window-item>
             <v-window-item value="option-3">
+                <WalletHome />
             </v-window-item>
             <v-window-item value="option-4">
-
+                <MyAccount />
             </v-window-item>
         </v-window>
     </v-card>
@@ -45,9 +46,11 @@
 <script>
 import ChampionshipsViewVue from '@/views/Users/ChampionshipsView.vue'
 import UserHome from '@/views/Users/UserHome.vue'
+import WalletHome from '@/views/Users/Wallet/WalletHome.vue'
+import MyAccount from '@/views/Users/account/MyAccount.vue'
 
 export default {
-    components: { ChampionshipsViewVue, UserHome },
+    components: { ChampionshipsViewVue, UserHome, WalletHome,MyAccount },
     data() {
         return {
             tab: 'option-1'

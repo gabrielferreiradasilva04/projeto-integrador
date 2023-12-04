@@ -67,7 +67,8 @@ export default {
                     title: 'Acertividade (%)',
                     key: 'percent'
                 }
-            ]
+            ],
+            table:[]
         }
     }
 }

@@ -27,12 +27,12 @@
               v-model="championship.status.description" prepend-inner-icon="mdi-bookmark-outline" readonly></v-text-field>
           </v-card-text>
           <v-card-actions class="d-flex flex-row-reverse">
-            <v-btn @click="this.showDetails = true" color="success">Detalhes</v-btn>
+            <v-btn @click="this.showDetailsFunction(championship)" color="success">Detalhes</v-btn>
           </v-card-actions>
         </v-card>
       </v-col>
     </v-row>
-    <ChampionshipDetails v-if="showDetails" @closeDetails="this.showDetails = false" />
+    <ChampionshipDetails :championshipProp="this.selectedChampionship" v-if="showDetails" @closeDetails="this.showDetails = false" />
   </v-container>
 </template>
     
@@ -55,6 +55,12 @@ export default {
       showDetails: false
     }
 
+  },
+  methods:{
+    showDetailsFunction(championship){
+      this.selectedChampionship = championship;
+      this.showDetails = true;
+    }
   }
 
 }

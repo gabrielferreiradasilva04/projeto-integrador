@@ -24,7 +24,13 @@
                     <v-icon>mdi-account</v-icon>
                 </v-icon>
                 Minha Conta
-                 </v-tab>
+            </v-tab>
+            <v-tab value="option-5">
+                <v-icon start size="x-large">
+                    <v-icon>mdi-cash</v-icon>
+                </v-icon>
+                Minhas Apostas
+            </v-tab>
         </v-tabs>
         <v-window v-model="tab" continuous class="w-100 rounded-xl">
             <v-window-item value="option-1">
@@ -39,6 +45,9 @@
             <v-window-item value="option-4">
                 <MyAccount />
             </v-window-item>
+            <v-window-item value="option-5">
+                <MyBets />
+            </v-window-item>
         </v-window>
     </v-card>
 </template>
@@ -48,9 +57,10 @@ import ChampionshipsViewVue from '@/views/Users/ChampionshipsView.vue'
 import UserHome from '@/views/Users/UserHome.vue'
 import WalletHome from '@/views/Users/Wallet/WalletHome.vue'
 import MyAccount from '@/views/Users/account/MyAccount.vue'
+import MyBets from '@/views/Users/bet/MyBets.vue'
 
 export default {
-    components: { ChampionshipsViewVue, UserHome, WalletHome,MyAccount },
+    components: { ChampionshipsViewVue, UserHome, WalletHome, MyAccount, MyBets },
     data() {
         return {
             tab: 'option-1'

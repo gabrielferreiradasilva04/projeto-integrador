@@ -28,10 +28,6 @@
 
                 <v-btn variant="text" color="error" @click="this.deletePilot"><v-icon
                         size="x-large">mdi-delete</v-icon></v-btn>
-
-                <v-btn @click="this.reset()" color="warning" variant="text">
-                    Limpar Campos
-                </v-btn>
                 <v-btn @click="this.edit" variant="text" color="success">
                     Salvar Alterações
                 </v-btn>

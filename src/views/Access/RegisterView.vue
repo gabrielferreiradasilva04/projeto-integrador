@@ -32,16 +32,19 @@
                     <v-text-field variant="outlined" v-model="user.phone" :rules="nameRules" label="Telfone para contato"
                         v-mask="['(##)#####-####']" required></v-text-field>
 
+                    <v-text-field variant="outlined" v-model="user.bDate" :rules="nameRules" label="Data de nascimento"
+                        v-mask="['##/##/####']" required></v-text-field>
+
                     <v-checkbox v-model="checkbox" :rules="[v => !!v || 'Você precisa concordar para continuar']"
                         label="Li e aceito os termos de uso" required @click="this.termsDialog = true"></v-checkbox>
                 </v-form>
             </v-card>
             <br>
             <v-card class="pa-2 d-flex flex-column rounded-xl elevation-24">
-                <v-btn color="success" variant="outlined" class="mt-4 rounded-pill"  @click="validate">
+                <v-btn color="success" variant="outlined" class="mt-4 rounded-pill" @click="validate">
                     Registrar-se
                 </v-btn>
-                <v-btn color="blue-darken-4" variant="outlined"  class="mt-4 rounded-pill" to="/">
+                <v-btn color="blue-darken-4" variant="outlined" class="mt-4 rounded-pill" to="/">
                     Já possuo uma conta!
                 </v-btn>
             </v-card>
@@ -78,6 +81,7 @@ export default {
             password: null,
             phone: null,
             userType: 2,
+            bDate: null
         },
         confirmPassword: null,
         //Dialogs

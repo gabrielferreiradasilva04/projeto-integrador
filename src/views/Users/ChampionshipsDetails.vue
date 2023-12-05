@@ -29,7 +29,7 @@
             </v-card-actions>
         </v-card>
         <ToBet v-if="this.showToBet" :cars="this.carsClash" :clashRecieve="this.selectedClash"
-            @closeBetDialog="this.showToBet = false" />
+            @closeBetDialog="this.closeTobet()" />
     </v-dialog>
 </template>
 
@@ -166,6 +166,10 @@ export default {
             this.carsClash.push(car2);
             this.showToBet = true;
         },
+        closeTobet(){
+            this.carsClash = [];
+            this.showToBet = false;
+        }
     },
 
     beforeMount() {

@@ -39,7 +39,6 @@
             <Message :infoMessage="this.dialogMessage" v-if="dialogMessageModal"
                 @closeMessageDialog="this.dialogMessageModal = false" />
             <!--Componente termos-->
-            <Terms @closeTermsDialog="this.termsDialog = false" v-if="termsDialog" />
         </v-sheet>
     </v-container>
 </template>
